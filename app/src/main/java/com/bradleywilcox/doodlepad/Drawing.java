@@ -9,7 +9,9 @@ import android.view.MotionEvent;
 import android.view.View;
 
 /**
- * Created by Brad on 3/10/2017.
+ * Bradley Wilcox / Michael Cha
+ * CSCI 4020
+ * Assignment 3
  */
 
 public class Drawing extends View {
