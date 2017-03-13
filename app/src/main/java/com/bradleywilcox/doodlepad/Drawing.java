@@ -1,10 +1,17 @@
 package com.bradleywilcox.doodlepad;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -20,8 +27,14 @@ public class Drawing extends View {
     private int currentHeight;
 
     private Paint paint;
-    private float x;
-    private float y;
+    private Canvas drawingCanvas;
+    private Bitmap bitmap;
+
+    private float dpiPixel;
+    private float x_down, y_down;
+
+    private RectF rect;
+
 
     public Drawing(Context context) {
         super(context);
@@ -42,15 +55,20 @@ public class Drawing extends View {
         paint = new Paint();
         paint.setColor(Color.RED);
         paint.setStyle(Paint.Style.FILL);
+
+        rect = new RectF();
+
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+        dpiPixel = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, dm);
     }
 
     @Override
     protected void onDraw(Canvas canvas){
         super.onDraw(canvas);
 
-        //update to dip later
-        int pixels = 50;
-        canvas.drawRect(x, y, x+pixels, y+pixels, paint);
+
+        canvas.drawBitmap(bitmap, 0, 0, paint);
+        canvas.drawRect(rect, paint);
     }
 
     @Override
@@ -60,17 +78,21 @@ public class Drawing extends View {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                y = touchY;
-                x = touchX;
+                x_down = touchX;
+                y_down = touchY;
 
                 break;
             case MotionEvent.ACTION_MOVE:
-                y = touchY;
-                x = touchX;
+
+                //allow rectangle to be drawn in all directions
+                rect.set(x_down > touchX ? touchX : x_down,
+                         y_down > touchY ? touchY : y_down,
+                         touchX < x_down ? x_down : touchX,
+                         touchY < y_down ? y_down : touchY);
 
                 break;
             case MotionEvent.ACTION_UP:
-
+                drawingCanvas.drawRect(rect, paint);
                 break;
             default:
                 return false;
@@ -118,5 +140,9 @@ public class Drawing extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         currentWidth = w;
         currentHeight = h;
+
+        bitmap = bitmap.createBitmap(currentWidth, currentHeight, Bitmap.Config.ARGB_8888);
+        drawingCanvas = new Canvas(bitmap);
+
     }
 }
