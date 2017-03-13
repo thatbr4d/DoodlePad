@@ -39,10 +39,9 @@ public class Drawing extends View {
     private Bitmap bitmap;
 
     private float dpiPixel;
-    private float x_down, y_down;
 
-    private RectF rect;
-    private Vector<Float> line;
+    private RectangleTool rect;
+    private LineTool line;
 
     private Tools tool;
 
@@ -66,12 +65,8 @@ public class Drawing extends View {
         paint.setColor(Color.RED);
         paint.setStyle(Paint.Style.STROKE);
 
-        rect = new RectF();
-        line = new Vector();
-        line.add(0, 1.0f);
-        line.add(1, 1.0f);
-        line.add(2, 1.0f);
-        line.add(3, 1.0f);
+        rect = new RectangleTool();
+        line = new LineTool();
 
         DisplayMetrics dm = getResources().getDisplayMetrics();
         dpiPixel = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, dm);
@@ -85,13 +80,12 @@ public class Drawing extends View {
     protected void onDraw(Canvas canvas){
         super.onDraw(canvas);
 
-
         canvas.drawBitmap(bitmap, 0, 0, paint);
 
         if(tool == Tools.rectangle)
-            canvas.drawRect(rect, paint);
+            rect.draw(canvas, paint);
         else if(tool == Tools.line)
-            canvas.drawLine(line.get(0), line.get(1), line.get(2), line.get(3), paint);
+            line.draw(canvas, paint);
     }
 
     @Override
@@ -102,41 +96,32 @@ public class Drawing extends View {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
 
-                x_down = touchX;
-                y_down = touchY;
-                line.set(0, x_down);
-                line.set(1, y_down);
-                line.set(2, x_down);
-                line.set(3, y_down);
+                if(tool == Tools.rectangle)
+                    rect.setStart(touchX, touchY);
+
+                else if(tool == Tools.line)
+                    line.setStart(touchX, touchY);
 
                 break;
 
             case MotionEvent.ACTION_MOVE:
 
                 if(tool == Tools.rectangle)
-                    //allow rectangle to be drawn in all directions
-                    rect.set(x_down > touchX ? touchX : x_down,
-                             y_down > touchY ? touchY : y_down,
-                             touchX < x_down ? x_down : touchX,
-                             touchY < y_down ? y_down : touchY);
+                    rect.setEnd(touchX, touchY);
 
-                else if(tool == Tools.line) {
-                    line.set(2, touchX);
-                    line.set(3, touchY);
-                }
+                else if(tool == Tools.line)
+                    line.setEnd(touchX, touchY);
+
 
                 break;
 
             case MotionEvent.ACTION_UP:
 
                 if(tool == Tools.rectangle)
-                    drawingCanvas.drawRect(rect, paint);
+                    rect.draw(drawingCanvas, paint);
                 else if(tool == Tools.line) {
-                    drawingCanvas.drawLine(line.get(0), line.get(1), line.get(2), line.get(3), paint);
-                    line.set(0, -1.0f);
-                    line.set(1, -1.0f);
-                    line.set(2, -1.0f);
-                    line.set(3, -1.0f);
+                    line.draw(drawingCanvas, paint);
+                    line.reset();
                 }
 
                 break;
