@@ -8,7 +8,7 @@ import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private ImageButton btnLineTool, btnRectTool;
+    private ImageButton btnLineTool, btnRectTool, btnBrushTool;
     private Drawing drawingView;
 
     @Override
@@ -27,10 +27,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btnLineTool = (ImageButton) findViewById(R.id.btnLineTool);
         btnRectTool = (ImageButton) findViewById(R.id.btnRectangleTool);
+        btnBrushTool = (ImageButton) findViewById(R.id.btnBrushTool);
         drawingView = (Drawing) findViewById(R.id.drawing_view);
 
         btnLineTool.setOnClickListener(this);
         btnRectTool.setOnClickListener(this);
+        btnBrushTool.setOnClickListener(this);
     }
 
     @Override
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             drawingView.setTool(Drawing.Tools.line);
         }else if(view == btnRectTool){
             drawingView.setTool(Drawing.Tools.rectangle);
+        }else if(view == btnBrushTool){
+            drawingView.setTool(Drawing.Tools.brush);
         }
     }
 }

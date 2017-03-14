@@ -28,7 +28,8 @@ public class Drawing extends View {
 
     public enum Tools{
         line,
-        rectangle
+        rectangle,
+        brush
     }
 
     private int currentWidth;
@@ -42,6 +43,7 @@ public class Drawing extends View {
 
     private RectangleTool rect;
     private LineTool line;
+    private BrushTool brush;
 
     private Tools tool;
 
@@ -67,11 +69,12 @@ public class Drawing extends View {
 
         rect = new RectangleTool();
         line = new LineTool();
+        brush = new BrushTool();
 
         DisplayMetrics dm = getResources().getDisplayMetrics();
         dpiPixel = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, dm);
 
-        paint.setStrokeWidth(dpiPixel);
+        paint.setStrokeWidth(dpiPixel * 10);
 
         setTool(Tools.line);
     }
@@ -86,6 +89,8 @@ public class Drawing extends View {
             rect.draw(canvas, paint);
         else if(tool == Tools.line)
             line.draw(canvas, paint);
+        else if(tool == Tools.brush)
+            brush.draw(canvas, paint);
     }
 
     @Override
@@ -102,6 +107,9 @@ public class Drawing extends View {
                 else if(tool == Tools.line)
                     line.setStart(touchX, touchY);
 
+                else if(tool == Tools.brush)
+                    brush.setStart(touchX, touchY);
+
                 break;
 
             case MotionEvent.ACTION_MOVE:
@@ -112,6 +120,8 @@ public class Drawing extends View {
                 else if(tool == Tools.line)
                     line.setEnd(touchX, touchY);
 
+                else if(tool == Tools.brush)
+                    brush.setEnd(touchX, touchY);
 
                 break;
 
@@ -122,6 +132,9 @@ public class Drawing extends View {
                 else if(tool == Tools.line) {
                     line.draw(drawingCanvas, paint);
                     line.reset();
+                }else if(tool == Tools.brush){
+                    brush.draw(drawingCanvas, paint);
+                    brush.reset();
                 }
 
                 break;
@@ -141,6 +154,12 @@ public class Drawing extends View {
             paint.setStyle(Paint.Style.FILL);
         }else if(this.tool == Tools.line){
             paint.setStyle(Paint.Style.STROKE);
+            paint.setStrokeCap(Paint.Cap.SQUARE);
+            paint.setStrokeJoin(Paint.Join.MITER);
+        }else if(this.tool == Tools.brush){
+            paint.setStyle(Paint.Style.STROKE);
+            paint.setStrokeJoin(Paint.Join.ROUND);
+            paint.setStrokeCap(Paint.Cap.ROUND);
         }
     }
 
