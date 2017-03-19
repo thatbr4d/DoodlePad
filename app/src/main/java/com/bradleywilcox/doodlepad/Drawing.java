@@ -74,8 +74,6 @@ public class Drawing extends View {
         DisplayMetrics dm = getResources().getDisplayMetrics();
         dpiPixel = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, dm);
 
-        paint.setStrokeWidth(dpiPixel * 10);
-
         setTool(Tools.line);
     }
 
@@ -151,7 +149,7 @@ public class Drawing extends View {
         this.tool = tool;
 
         if(this.tool == Tools.rectangle){
-            paint.setStyle(Paint.Style.FILL);
+            paint.setStyle(Paint.Style.FILL_AND_STROKE);
         }else if(this.tool == Tools.line){
             paint.setStyle(Paint.Style.STROKE);
             paint.setStrokeCap(Paint.Cap.SQUARE);
@@ -161,6 +159,10 @@ public class Drawing extends View {
             paint.setStrokeJoin(Paint.Join.ROUND);
             paint.setStrokeCap(Paint.Cap.ROUND);
         }
+    }
+
+    public void setStrokeWidth(float width){
+        paint.setStrokeWidth(width * dpiPixel);
     }
 
     @Override
