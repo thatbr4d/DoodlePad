@@ -1,12 +1,22 @@
 package com.bradleywilcox.doodlepad;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
+
+import java.util.Vector;
 
 /**
  * Bradley Wilcox / Michael Cha
@@ -16,12 +26,26 @@ import android.view.View;
 
 public class Drawing extends View {
 
+    public enum Tools{
+        line,
+        rectangle,
+        brush
+    }
+
     private int currentWidth;
     private int currentHeight;
 
     private Paint paint;
-    private float x;
-    private float y;
+    private Canvas drawingCanvas;
+    private Bitmap bitmap;
+
+    private float dpiPixel;
+
+    private RectangleTool rect;
+    private LineTool line;
+    private BrushTool brush;
+
+    private Tools tool;
 
     public Drawing(Context context) {
         super(context);
@@ -41,16 +65,30 @@ public class Drawing extends View {
     private void setup(AttributeSet attrs){
         paint = new Paint();
         paint.setColor(Color.RED);
-        paint.setStyle(Paint.Style.FILL);
+        paint.setStyle(Paint.Style.STROKE);
+
+        rect = new RectangleTool();
+        line = new LineTool();
+        brush = new BrushTool();
+
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+        dpiPixel = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, dm);
+
+        setTool(Tools.line);
     }
 
     @Override
     protected void onDraw(Canvas canvas){
         super.onDraw(canvas);
 
-        //update to dip later
-        int pixels = 50;
-        canvas.drawRect(x, y, x+pixels, y+pixels, paint);
+        canvas.drawBitmap(bitmap, 0, 0, paint);
+
+        if(tool == Tools.rectangle)
+            rect.draw(canvas, paint);
+        else if(tool == Tools.line)
+            line.draw(canvas, paint);
+        else if(tool == Tools.brush)
+            brush.draw(canvas, paint);
     }
 
     @Override
@@ -60,24 +98,71 @@ public class Drawing extends View {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                y = touchY;
-                x = touchX;
+
+                if(tool == Tools.rectangle)
+                    rect.setStart(touchX, touchY);
+
+                else if(tool == Tools.line)
+                    line.setStart(touchX, touchY);
+
+                else if(tool == Tools.brush)
+                    brush.setStart(touchX, touchY);
 
                 break;
+
             case MotionEvent.ACTION_MOVE:
-                y = touchY;
-                x = touchX;
+
+                if(tool == Tools.rectangle)
+                    rect.setEnd(touchX, touchY);
+
+                else if(tool == Tools.line)
+                    line.setEnd(touchX, touchY);
+
+                else if(tool == Tools.brush)
+                    brush.setEnd(touchX, touchY);
 
                 break;
+
             case MotionEvent.ACTION_UP:
 
+                if(tool == Tools.rectangle)
+                    rect.draw(drawingCanvas, paint);
+                else if(tool == Tools.line) {
+                    line.draw(drawingCanvas, paint);
+                    line.reset();
+                }else if(tool == Tools.brush){
+                    brush.draw(drawingCanvas, paint);
+                    brush.reset();
+                }
+
                 break;
+
             default:
                 return false;
         }
 
         invalidate();
         return true;
+    }
+
+    public void setTool(Tools tool){
+        this.tool = tool;
+
+        if(this.tool == Tools.rectangle){
+            paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        }else if(this.tool == Tools.line){
+            paint.setStyle(Paint.Style.STROKE);
+            paint.setStrokeCap(Paint.Cap.SQUARE);
+            paint.setStrokeJoin(Paint.Join.MITER);
+        }else if(this.tool == Tools.brush){
+            paint.setStyle(Paint.Style.STROKE);
+            paint.setStrokeJoin(Paint.Join.ROUND);
+            paint.setStrokeCap(Paint.Cap.ROUND);
+        }
+    }
+
+    public void setStrokeWidth(float width){
+        paint.setStrokeWidth(width * dpiPixel);
     }
 
     @Override
@@ -118,5 +203,9 @@ public class Drawing extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         currentWidth = w;
         currentHeight = h;
+
+        bitmap = bitmap.createBitmap(currentWidth, currentHeight, Bitmap.Config.ARGB_8888);
+        drawingCanvas = new Canvas(bitmap);
+
     }
 }
