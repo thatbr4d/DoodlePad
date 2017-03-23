@@ -4,19 +4,12 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
-
-import java.util.Vector;
 
 /**
  * Bradley Wilcox / Michael Cha
@@ -41,11 +34,8 @@ public class Drawing extends View {
 
     private float dpiPixel;
 
-    private RectangleTool rect;
-    private LineTool line;
-    private BrushTool brush;
-
-    private Tools tool;
+    private ITool[] tools = new ITool[Tools.values().length];
+    private Tools currentTool;
 
     public Drawing(Context context) {
         super(context);
@@ -67,9 +57,9 @@ public class Drawing extends View {
         paint.setColor(Color.RED);
         paint.setStyle(Paint.Style.STROKE);
 
-        rect = new RectangleTool();
-        line = new LineTool();
-        brush = new BrushTool();
+        tools[Tools.line.ordinal()] = new LineTool();
+        tools[Tools.rectangle.ordinal()] = new RectangleTool();
+        tools[Tools.brush.ordinal()] = new BrushTool();
 
         DisplayMetrics dm = getResources().getDisplayMetrics();
         dpiPixel = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, dm);
@@ -82,13 +72,7 @@ public class Drawing extends View {
         super.onDraw(canvas);
 
         canvas.drawBitmap(bitmap, 0, 0, paint);
-
-        if(tool == Tools.rectangle)
-            rect.draw(canvas, paint);
-        else if(tool == Tools.line)
-            line.draw(canvas, paint);
-        else if(tool == Tools.brush)
-            brush.draw(canvas, paint);
+        tools[currentTool.ordinal()].draw(canvas, paint);
     }
 
     @Override
@@ -99,42 +83,18 @@ public class Drawing extends View {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
 
-                if(tool == Tools.rectangle)
-                    rect.setStart(touchX, touchY);
-
-                else if(tool == Tools.line)
-                    line.setStart(touchX, touchY);
-
-                else if(tool == Tools.brush)
-                    brush.setStart(touchX, touchY);
-
+                tools[currentTool.ordinal()].setStart(touchX, touchY);
                 break;
 
             case MotionEvent.ACTION_MOVE:
 
-                if(tool == Tools.rectangle)
-                    rect.setEnd(touchX, touchY);
-
-                else if(tool == Tools.line)
-                    line.setEnd(touchX, touchY);
-
-                else if(tool == Tools.brush)
-                    brush.setEnd(touchX, touchY);
-
+                tools[currentTool.ordinal()].setEnd(touchX, touchY);
                 break;
 
             case MotionEvent.ACTION_UP:
 
-                if(tool == Tools.rectangle)
-                    rect.draw(drawingCanvas, paint);
-                else if(tool == Tools.line) {
-                    line.draw(drawingCanvas, paint);
-                    line.reset();
-                }else if(tool == Tools.brush){
-                    brush.draw(drawingCanvas, paint);
-                    brush.reset();
-                }
-
+                tools[currentTool.ordinal()].draw(drawingCanvas, paint);
+                tools[currentTool.ordinal()].reset();
                 break;
 
             default:
@@ -146,15 +106,15 @@ public class Drawing extends View {
     }
 
     public void setTool(Tools tool){
-        this.tool = tool;
+        this.currentTool = tool;
 
-        if(this.tool == Tools.rectangle){
-            paint.setStyle(Paint.Style.FILL_AND_STROKE);
-        }else if(this.tool == Tools.line){
+        if(this.currentTool == Tools.rectangle){
+            paint.setStyle(Paint.Style.FILL);
+        }else if(this.currentTool == Tools.line){
             paint.setStyle(Paint.Style.STROKE);
             paint.setStrokeCap(Paint.Cap.SQUARE);
             paint.setStrokeJoin(Paint.Join.MITER);
-        }else if(this.tool == Tools.brush){
+        }else if(this.currentTool == Tools.brush){
             paint.setStyle(Paint.Style.STROKE);
             paint.setStrokeJoin(Paint.Join.ROUND);
             paint.setStrokeCap(Paint.Cap.ROUND);
