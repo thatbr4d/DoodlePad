@@ -237,9 +237,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnSubmit.setOnClickListener(new ImageButton.OnClickListener(){
             @Override
             public void onClick(View v)
-            {popw.dismiss();}});
-    }
+            {popw.dismiss();
+                drawingView.setStrokeWidth((float) sbStrokeWidth.getProgress());}});
 
+
+    }
 
 }
 
