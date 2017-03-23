@@ -5,7 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 
-public class RectangleTool {
+public class RectangleTool implements ITool {
 
     private RectF rect;
     private float startX;
@@ -30,6 +30,10 @@ public class RectangleTool {
 
     public void draw(Canvas canvas, Paint paint){
         canvas.drawRect(rect, paint);
+    }
+
+    public void reset() {
+
     }
 
 

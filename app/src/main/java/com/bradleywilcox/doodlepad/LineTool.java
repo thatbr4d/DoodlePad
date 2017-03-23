@@ -6,7 +6,7 @@ import android.graphics.Paint;
 
 import java.util.Vector;
 
-public class LineTool {
+public class LineTool implements ITool {
 
     private Vector<Float> line;
 
