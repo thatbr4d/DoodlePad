@@ -67,6 +67,12 @@ public class Drawing extends View {
         setTool(Tools.line);
     }
 
+    public void setupPaint(int kolor)
+    {
+        paint = new Paint();
+        paint.setColor(kolor);
+    }
+
     @Override
     protected void onDraw(Canvas canvas){
         super.onDraw(canvas);
