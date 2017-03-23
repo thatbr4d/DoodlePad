@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="5dp"
+        android:background="@android:color/darker_gray">
+        >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="20dp">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/txtViewPop"
+                android:layout_marginBottom="5dp"
+                android:text="Select Color" />
+
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/black"
+                android:clickable="true"
+                android:layout_marginRight="5dp"
+                android:layout_below="@id/txtViewPop"
+                android:id="@+id/iButtonC" />
+
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/iButtonC2"
+                android:src="@drawable/white"
+                android:layout_marginRight="5dp"
+                android:layout_below="@id/txtViewPop"
+                android:layout_toEndOf="@+id/iButtonC" />
+
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/iButtonC3"
+                android:src="@drawable/blue"
+                android:layout_marginRight="5dp"
+                android:layout_below="@id/txtViewPop"
+                android:layout_toEndOf="@+id/iButtonC2"/>
+
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/iButtonC4"
+                android:src="@drawable/cyan"
+                android:layout_marginRight="5dp"
+                android:layout_below="@id/txtViewPop"
+                android:layout_toEndOf="@+id/iButtonC3" />
+
+
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/iButtonC5"
+                android:src="@drawable/darkgray"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/iButtonC" />
+
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/iButtonC6"
+                android:src="@drawable/gray"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/iButtonC"
+                android:layout_toRightOf="@id/iButtonC5"/>
+
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/iButtonC7"
+                android:src="@drawable/lightgray"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/iButtonC"
+                android:layout_toRightOf="@id/iButtonC6"/>
+
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/iButtonC8"
+                android:src="@drawable/green"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/iButtonC"
+                android:layout_toRightOf="@id/iButtonC7"/>
+
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/iButtonC9"
+                android:src="@drawable/magenta"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/iButtonC5" />
+
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/iButtonC10"
+                android:src="@drawable/red"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/iButtonC5"
+                android:layout_toRightOf="@id/iButtonC9"/>
+
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/iButtonC11"
+                android:src="@drawable/yellow"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/iButtonC5"
+                android:layout_toRightOf="@id/iButtonC10"/>
+
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/iButtonC12"
+                android:clickable="true"
+                android:src="@drawable/orange"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/iButtonC5"
+                android:layout_toRightOf="@id/iButtonC11"/>
+
+            <TextView
+                android:text="Selected Color"
+                android:id="@+id/txtViewpop2"
+                android:layout_width="130dp"
+                android:background="@color/white"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/iButtonC9"/>
+
+        </RelativeLayout>
+
+        <Button
+            android:text="Submit"
+            android:id="@+id/submitColor"
+            android:layout_centerHorizontal="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </LinearLayout>
+</LinearLayout>
+
+
