@@ -1,7 +1,12 @@
 package com.bradleywilcox.doodlepad;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Build;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.PermissionChecker;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,39 +18,47 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 /**
  * Bradley Wilcox / Michael Cha
  * CSCI 4020
  * Assignment 3
- * <p>
+ *
  * Additional Features
- * <p>
+ *
  * 1.  Brush Tool, an extra tool that acts like a paint brush, allowing you to draw
  * more than just a straight line.  Found in the class 'BrushTool'
- * <p>
- * 2.
- * <p>
- * <p>
+ *
+ * 2.  Save Feature, the save button will save the current drawing into the phones
+ * gallery.  Found in the class 'Image'.  Also required requestPermissions found in this class for sdk >= 23
+ *
+ *
  * 3.
- * <p>
- * <p>
+ *
+ *
  * 4.
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private ImageButton btnLineTool, btnRectTool, btnBrushTool;
+    private ImageButton btnLineTool, btnRectTool, btnBrushTool, btnSave;
     private SeekBar sbStrokeWidth;
     private Drawing drawingView;
     private Button btnPop, btnSubmit;
     private TextView txtViewColor, txtViewColor2, txtViewColor3;
     private ImageButton showColor,  btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10, btn11, btn12;
 
+    private boolean hasExtPermission = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PermissionChecker.PERMISSION_GRANTED)
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        }
 
         getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -60,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnLineTool = (ImageButton) findViewById(R.id.btnLineTool);
         btnRectTool = (ImageButton) findViewById(R.id.btnRectangleTool);
         btnBrushTool = (ImageButton) findViewById(R.id.btnBrushTool);
+        btnSave = (ImageButton) findViewById(R.id.btnSave);
+
         sbStrokeWidth = (SeekBar) findViewById(R.id.sbStrokeWidth);
         drawingView = (Drawing) findViewById(R.id.drawing_view);
 
@@ -71,12 +86,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnLineTool.setOnClickListener(this);
         btnRectTool.setOnClickListener(this);
         btnBrushTool.setOnClickListener(this);
+        btnSave.setOnClickListener(this);
         btnPop.setOnClickListener(this);
 
 
         sbStrokeWidth.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int progress = 0;
-
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -96,7 +111,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //set initial value
         drawingView.setStrokeWidth((float) sbStrokeWidth.getProgress());
-
     }
 
     @Override
@@ -112,6 +126,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             txtViewColor3.setText("Brush");
         } else if (view == btnPop) {
             runPopup();
+        }else if(view == btnSave){
+
+            if(!hasExtPermission) {
+                Toast.makeText(getApplicationContext(), "This feature requires permissions", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            if(Image.Save(drawingView, getContentResolver()))
+                Toast.makeText(getApplicationContext(), "Drawing Saved Successfully", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(getApplicationContext(), "Problem Saving Image", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -241,6 +266,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 drawingView.setStrokeWidth((float) sbStrokeWidth.getProgress());}});
 
 
+    }
+
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                } else {
+                    hasExtPermission = false;
+                }
+                return;
+            }
+        }
     }
 
 }

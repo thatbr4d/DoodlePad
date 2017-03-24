@@ -69,7 +69,6 @@ public class Drawing extends View {
 
     public void setupPaint(int kolor)
     {
-        paint = new Paint();
         paint.setColor(kolor);
     }
 
