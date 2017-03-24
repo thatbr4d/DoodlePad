@@ -1,5 +1,7 @@
 package com.bradleywilcox.doodlepad;
 
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -37,8 +39,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private SeekBar sbStrokeWidth;
     private Drawing drawingView;
     private Button btnPop, btnSubmit;
-    private TextView txtViewColor;
-    private ImageButton btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10, btn11, btn12;
+    private TextView txtViewColor, txtViewColor2, txtViewColor3;
+    private ImageButton showColor,  btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10, btn11, btn12;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         sbStrokeWidth = (SeekBar) findViewById(R.id.sbStrokeWidth);
         drawingView = (Drawing) findViewById(R.id.drawing_view);
 
+        txtViewColor2 = (TextView) findViewById(R.id.textViewcolor);
+        txtViewColor3 = (TextView)findViewById(R.id.textViewcolor2);
+        showColor = (ImageButton) findViewById(R.id.imageButtoncolor);
+
         btnPop = (Button) findViewById(R.id.buttonColor2);
         btnLineTool.setOnClickListener(this);
         btnRectTool.setOnClickListener(this);
@@ -69,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         sbStrokeWidth.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int progress = 0;
+
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -95,10 +103,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         if (view == btnLineTool) {
             drawingView.setTool(Drawing.Tools.line);
+            txtViewColor3.setText("Line");
         } else if (view == btnRectTool) {
             drawingView.setTool(Drawing.Tools.rectangle);
+            txtViewColor3.setText("Rectangle");
         } else if (view == btnBrushTool) {
             drawingView.setTool(Drawing.Tools.brush);
+            txtViewColor3.setText("Brush");
         } else if (view == btnPop) {
             runPopup();
         }
@@ -117,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         setimageBtns(popupView, popupWindow);
 
-        popupWindow.showAsDropDown(btnPop, 50, -30);
+        popupWindow.showAsDropDown(btnPop, 50, -50);
 
     }
 
@@ -137,7 +148,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn11 = (ImageButton) pop.findViewById(R.id.iButtonC11);
         btn12 = (ImageButton) pop.findViewById(R.id.iButtonC12);
 
-
         btn3.setOnClickListener(this);
         btn4.setOnClickListener(this);
         btn5.setOnClickListener(this);
@@ -155,57 +165,83 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn1.setOnClickListener(new ImageButton.OnClickListener(){
             @Override
             public void onClick(View v)
-            {txtViewColor.setText("Selected: Black");}});
+            {txtViewColor.setText("Selected: Black");
+            drawingView.setupPaint(Color.BLACK);
+            showColor.setImageResource(R.drawable.black);}});
         btn2.setOnClickListener(new ImageButton.OnClickListener(){
             @Override
             public void onClick(View v)
-            {txtViewColor.setText("Selected: White");}});
+            {txtViewColor.setText("Selected: White");
+            drawingView.setupPaint(Color.WHITE);
+                showColor.setImageResource(R.drawable.white);}});
         btn3.setOnClickListener(new ImageButton.OnClickListener(){
             @Override
             public void onClick(View v)
-            {txtViewColor.setText("Selected: Blue");}});
+            {txtViewColor.setText("Selected: Blue");
+            drawingView.setupPaint(Color.BLUE);
+                showColor.setImageResource(R.drawable.blue); }});
         btn4.setOnClickListener(new ImageButton.OnClickListener(){
             @Override
             public void onClick(View v)
-            {txtViewColor.setText("Selected: Cyan");}});
+            {txtViewColor.setText("Selected: Cyan");
+                drawingView.setupPaint(Color.CYAN);
+                showColor.setImageResource(R.drawable.cyan);}});
         btn5.setOnClickListener(new ImageButton.OnClickListener(){
             @Override
             public void onClick(View v)
-            {txtViewColor.setText("Selected: Dark Gray");}});
+            {txtViewColor.setText("Selected: Dark Gray");
+                drawingView.setupPaint(Color.DKGRAY);
+                showColor.setImageResource(R.drawable.darkgray);}});
         btn6.setOnClickListener(new ImageButton.OnClickListener(){
             @Override
             public void onClick(View v)
-            {txtViewColor.setText("Selected: Gray");}});
+            {txtViewColor.setText("Selected: Gray");
+                drawingView.setupPaint(Color.GRAY);
+                showColor.setImageResource(R.drawable.gray);}});
         btn7.setOnClickListener(new ImageButton.OnClickListener(){
             @Override
             public void onClick(View v)
-            {txtViewColor.setText("Selected: Light Gray");}});
+            {txtViewColor.setText("Selected: Light Gray");
+                drawingView.setupPaint(Color.LTGRAY);
+                showColor.setImageResource(R.drawable.lightgray); }});
         btn8.setOnClickListener(new ImageButton.OnClickListener(){
             @Override
             public void onClick(View v)
-            {txtViewColor.setText("Selected: Green");}});
+            {txtViewColor.setText("Selected: Green");
+                drawingView.setupPaint(Color.GREEN);
+                showColor.setImageResource(R.drawable.green);}});
         btn9.setOnClickListener(new ImageButton.OnClickListener(){
             @Override
             public void onClick(View v)
-            {txtViewColor.setText("Selected: Magenta");}});
+            {txtViewColor.setText("Selected: Magenta");
+                drawingView.setupPaint(Color.MAGENTA);
+                showColor.setImageResource(R.drawable.magenta); }});
         btn10.setOnClickListener(new ImageButton.OnClickListener(){
             @Override
             public void onClick(View v)
-            {txtViewColor.setText("Selected: Red");}});
+            {txtViewColor.setText("Selected: Red");
+                drawingView.setupPaint(Color.RED);
+                showColor.setImageResource(R.drawable.red);}});
         btn11.setOnClickListener(new ImageButton.OnClickListener(){
             @Override
             public void onClick(View v)
-            {txtViewColor.setText("Selected: Yellow");}});
+            {txtViewColor.setText("Selected: Yellow");
+                drawingView.setupPaint(Color.YELLOW);
+                showColor.setImageResource(R.drawable.yellow);}});
         btn12.setOnClickListener(new ImageButton.OnClickListener(){
             @Override
             public void onClick(View v)
-            {txtViewColor.setText("Selected: Orange");}});
+            {txtViewColor.setText("Selected: Orange");
+                drawingView.setupPaint(Color.parseColor("#ffa500"));
+                showColor.setImageResource(R.drawable.orange);}});
         btnSubmit.setOnClickListener(new ImageButton.OnClickListener(){
             @Override
             public void onClick(View v)
-            {popw.dismiss();}});
-    }
+            {popw.dismiss();
+                drawingView.setStrokeWidth((float) sbStrokeWidth.getProgress());}});
 
+
+    }
 
 }
 
