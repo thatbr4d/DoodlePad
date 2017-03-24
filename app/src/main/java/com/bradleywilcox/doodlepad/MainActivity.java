@@ -1,10 +1,12 @@
 package com.bradleywilcox.doodlepad;
 
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.SurfaceHolder;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -35,12 +37,13 @@ import android.widget.TextView;
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private ImageButton btnLineTool, btnRectTool, btnBrushTool;
+    private ImageButton btnLineTool, btnRectTool, btnBrushTool, btnEraser;
     private SeekBar sbStrokeWidth;
     private Drawing drawingView;
     private Button btnPop, btnSubmit;
     private TextView txtViewColor, txtViewColor2, txtViewColor3;
     private ImageButton showColor,  btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10, btn11, btn12;
+    public int sent;
 
 
     @Override
@@ -60,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnLineTool = (ImageButton) findViewById(R.id.btnLineTool);
         btnRectTool = (ImageButton) findViewById(R.id.btnRectangleTool);
         btnBrushTool = (ImageButton) findViewById(R.id.btnBrushTool);
+        btnEraser = (ImageButton) findViewById(R.id.btnEraser);
         sbStrokeWidth = (SeekBar) findViewById(R.id.sbStrokeWidth);
         drawingView = (Drawing) findViewById(R.id.drawing_view);
 
@@ -71,12 +75,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnLineTool.setOnClickListener(this);
         btnRectTool.setOnClickListener(this);
         btnBrushTool.setOnClickListener(this);
+        btnEraser.setOnClickListener(this);
         btnPop.setOnClickListener(this);
 
 
         sbStrokeWidth.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int progress = 0;
-
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -101,16 +105,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
+        showColor.setVisibility(View.VISIBLE);
         if (view == btnLineTool) {
-            drawingView.setTool(Drawing.Tools.line);
-            txtViewColor3.setText("Line");
+            setViews(view);
         } else if (view == btnRectTool) {
-            drawingView.setTool(Drawing.Tools.rectangle);
-            txtViewColor3.setText("Rectangle");
+            setViews(view);
         } else if (view == btnBrushTool) {
-            drawingView.setTool(Drawing.Tools.brush);
-            txtViewColor3.setText("Brush");
-        } else if (view == btnPop) {
+            setViews(view);
+            sent = 1;
+        }else if(view==btnEraser){
+            drawingView.setTool(Drawing.Tools.eraser);
+            setViews(view);
+        }
+        else if (view == btnPop) {
             runPopup();
         }
     }
@@ -132,6 +139,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    public void setViews(View v)
+    {
+        if(v==btnLineTool)
+        {
+            drawingView.setTool(Drawing.Tools.line);
+            txtViewColor3.setText("Line");
+        }
+        else if(v==btnRectTool)
+        {
+            drawingView.setTool(Drawing.Tools.rectangle);
+            txtViewColor3.setText("Rectangle");
+        }
+        else if(v==btnBrushTool)
+        {
+            drawingView.setTool(Drawing.Tools.brush);
+            txtViewColor3.setText("Brush");
+        }
+        else if(v==btnEraser) {
+            txtViewColor3.setText("Eraser");
+            showColor.setVisibility(View.INVISIBLE);
+            drawingView.setupPaint(Color.WHITE);
+            sbStrokeWidth.setProgress(sbStrokeWidth.getProgress());
+
+        }
+
+    }
 
     public void setimageBtns(View pop, final PopupWindow popw) {
 
@@ -148,16 +181,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn11 = (ImageButton) pop.findViewById(R.id.iButtonC11);
         btn12 = (ImageButton) pop.findViewById(R.id.iButtonC12);
 
-        btn3.setOnClickListener(this);
-        btn4.setOnClickListener(this);
-        btn5.setOnClickListener(this);
-        btn6.setOnClickListener(this);
-        btn7.setOnClickListener(this);
-        btn8.setOnClickListener(this);
-        btn9.setOnClickListener(this);
-        btn10.setOnClickListener(this);
-        btn11.setOnClickListener(this);
-        btn12.setOnClickListener(this);
 
         txtViewColor = (TextView) pop.findViewById(R.id.txtViewpop2);
         btnSubmit = (Button) pop.findViewById(R.id.submitColor);
@@ -237,11 +260,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnSubmit.setOnClickListener(new ImageButton.OnClickListener(){
             @Override
             public void onClick(View v)
-            {popw.dismiss();
-                drawingView.setStrokeWidth((float) sbStrokeWidth.getProgress());}});
-
+            {if(sent==1)
+                drawingView.setTool(Drawing.Tools.brush);
+                popw.dismiss();
+                sbStrokeWidth.setProgress(0);}});
 
     }
+
 
 }
 
