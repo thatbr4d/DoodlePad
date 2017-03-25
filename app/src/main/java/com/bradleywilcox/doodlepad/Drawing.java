@@ -11,7 +11,6 @@ import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 
-
 /**
  * Bradley Wilcox / Michael Cha
  * CSCI 4020
@@ -23,8 +22,7 @@ public class Drawing extends View {
     public enum Tools{
         line,
         rectangle,
-        brush,
-        eraser
+        brush
     }
 
     private int currentWidth;
@@ -62,7 +60,6 @@ public class Drawing extends View {
         tools[Tools.line.ordinal()] = new LineTool();
         tools[Tools.rectangle.ordinal()] = new RectangleTool();
         tools[Tools.brush.ordinal()] = new BrushTool();
-        tools[Tools.eraser.ordinal()] = new EraserTool();
 
         DisplayMetrics dm = getResources().getDisplayMetrics();
         dpiPixel = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, dm);
@@ -72,10 +69,8 @@ public class Drawing extends View {
 
     public void setupPaint(int kolor)
     {
-        paint = new Paint();
         paint.setColor(kolor);
     }
-
 
     @Override
     protected void onDraw(Canvas canvas){
@@ -115,24 +110,19 @@ public class Drawing extends View {
         return true;
     }
 
-    public void setTool(Tools tool) {
+    public void setTool(Tools tool){
         this.currentTool = tool;
 
-        if (this.currentTool == Tools.rectangle) {
+        if(this.currentTool == Tools.rectangle){
             paint.setStyle(Paint.Style.FILL);
-        } else if (this.currentTool == Tools.line) {
+        }else if(this.currentTool == Tools.line){
             paint.setStyle(Paint.Style.STROKE);
             paint.setStrokeCap(Paint.Cap.SQUARE);
             paint.setStrokeJoin(Paint.Join.MITER);
-        } else if (this.currentTool == Tools.brush) {
+        }else if(this.currentTool == Tools.brush){
             paint.setStyle(Paint.Style.STROKE);
             paint.setStrokeJoin(Paint.Join.ROUND);
             paint.setStrokeCap(Paint.Cap.ROUND);
-        } else if (this.currentTool == Tools.eraser) {
-            paint.setStyle(Paint.Style.STROKE);
-            paint.setStrokeJoin(Paint.Join.ROUND);
-            paint.setStrokeCap(Paint.Cap.ROUND);
-            paint.setColor(Color.WHITE);
         }
     }
 

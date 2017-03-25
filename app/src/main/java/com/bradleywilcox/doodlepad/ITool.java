@@ -4,7 +4,9 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 /**
- * Created by Brad on 3/22/2017.
+ * Bradley Wilcox / Michael Cha
+ * CSCI 4020
+ * Assignment 3
  */
 
 public interface ITool {
