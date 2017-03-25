@@ -42,10 +42,10 @@ import android.widget.Toast;
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private ImageButton btnLineTool, btnRectTool, btnBrushTool, btnSave;
+    private ImageButton btnLineTool, btnRectTool, btnBrushTool, btnSave, btnErase;
     private SeekBar sbStrokeWidth;
     private Drawing drawingView;
-    private Button btnPop, btnSubmit;
+    private Button btnColor, btnSubmit;
     private TextView txtViewColor, txtViewColor2, txtViewColor3;
     private ImageButton showColor,  btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10, btn11, btn12;
 
@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnRectTool = (ImageButton) findViewById(R.id.btnRectangleTool);
         btnBrushTool = (ImageButton) findViewById(R.id.btnBrushTool);
         btnSave = (ImageButton) findViewById(R.id.btnSave);
+        btnErase = (ImageButton) findViewById(R.id.btnErase);
 
         sbStrokeWidth = (SeekBar) findViewById(R.id.sbStrokeWidth);
         drawingView = (Drawing) findViewById(R.id.drawing_view);
@@ -82,12 +83,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         txtViewColor3 = (TextView)findViewById(R.id.textViewcolor2);
         showColor = (ImageButton) findViewById(R.id.imageButtoncolor);
 
-        btnPop = (Button) findViewById(R.id.buttonColor2);
+        btnColor = (Button) findViewById(R.id.buttonColor);
         btnLineTool.setOnClickListener(this);
         btnRectTool.setOnClickListener(this);
         btnBrushTool.setOnClickListener(this);
+        btnErase.setOnClickListener(this);
         btnSave.setOnClickListener(this);
-        btnPop.setOnClickListener(this);
+        btnColor.setOnClickListener(this);
 
 
         sbStrokeWidth.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -124,8 +126,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (view == btnBrushTool) {
             drawingView.setTool(Drawing.Tools.brush);
             txtViewColor3.setText("Brush");
-        } else if (view == btnPop) {
+        } else if (view == btnColor) {
             runPopup();
+        }else if(view == btnErase) {
+            drawingView.setTool(Drawing.Tools.eraser);
+            drawingView.setupPaint(Color.WHITE);
+            txtViewColor3.setText("Eraser");
+            showColor.setImageResource(R.drawable.white);
+
         }else if(view == btnSave){
 
             if(!hasExtPermission) {
@@ -153,10 +161,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         setimageBtns(popupView, popupWindow);
 
-        popupWindow.showAsDropDown(btnPop, 50, -50);
+        popupWindow.showAsDropDown(btnColor, 50, -50);
 
     }
-
 
     public void setimageBtns(View pop, final PopupWindow popw) {
 
@@ -172,17 +179,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn10 = (ImageButton) pop.findViewById(R.id.iButtonC10);
         btn11 = (ImageButton) pop.findViewById(R.id.iButtonC11);
         btn12 = (ImageButton) pop.findViewById(R.id.iButtonC12);
-
-        btn3.setOnClickListener(this);
-        btn4.setOnClickListener(this);
-        btn5.setOnClickListener(this);
-        btn6.setOnClickListener(this);
-        btn7.setOnClickListener(this);
-        btn8.setOnClickListener(this);
-        btn9.setOnClickListener(this);
-        btn10.setOnClickListener(this);
-        btn11.setOnClickListener(this);
-        btn12.setOnClickListener(this);
 
         txtViewColor = (TextView) pop.findViewById(R.id.txtViewpop2);
         btnSubmit = (Button) pop.findViewById(R.id.submitColor);
@@ -265,10 +261,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             {popw.dismiss();
                 drawingView.setStrokeWidth((float) sbStrokeWidth.getProgress());}});
 
-
     }
-
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
