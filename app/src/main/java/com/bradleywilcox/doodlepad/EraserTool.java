@@ -11,6 +11,7 @@ public class EraserTool implements ITool {
     private Paint paint;
 
     public EraserTool(){
+
         paint = new Paint();
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
