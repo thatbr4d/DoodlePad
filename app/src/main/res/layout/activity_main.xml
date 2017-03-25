@@ -102,10 +102,10 @@
             android:layout_marginLeft="5dp"
             android:id="@+id/textViewcolor" />
 
-        <ImageButton
+        <ImageView
             android:layout_width="40dp"
             android:layout_height="15dp"
-            android:src="@drawable/red"
+            android:background="@color/red"
             android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"
             android:id="@+id/imageButtoncolor"
@@ -124,33 +124,47 @@
             android:layout_alignParentBottom="true"
             android:layout_toEndOf="@+id/imageButtoncolor" />
 
-        <TextView
-            android:text="Background"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/textViewcolor3" />
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="15dp"
-            android:background="@color/white"
-            android:layout_marginBottom="5dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/imageButtoncolor2" />
+        <Button
+            android:text="Custom\nColors"
+            android:textSize="8dp"
+            android:layout_width="55dp"
+            android:layout_height="35dp"
+            android:background="@drawable/roundbutton"
+            android:id="@+id/buttonColor2"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/buttonColor"
+            android:layout_alignBottom="@+id/buttonColor"
+             />
 
         <Button
-            android:text="More\nColors"
+            android:text="Set\nColors"
             android:textSize="8dp"
             android:layout_width="55dp"
             android:layout_height="35dp"
             android:background="@drawable/roundbutton"
             android:id="@+id/buttonColor"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="8dp"
             android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/textViewcolor3"
-            android:layout_marginStart="25dp" />
+            android:layout_toEndOf="@+id/textViewcolor3" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="15dp"
+            android:background="@color/white"
+            android:id="@+id/imageButtoncolor2"
+            android:layout_alignTop="@+id/textViewcolor2"
+            android:layout_toEndOf="@+id/textViewcolor2"
+            android:layout_marginStart="63dp" />
+
+        <TextView
+            android:text="Background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewcolor3"
+            android:layout_above="@+id/imageButtoncolor2"
+            android:layout_toEndOf="@+id/textViewcolor2"
+            android:layout_marginStart="46dp" />
 
 
     </RelativeLayout>

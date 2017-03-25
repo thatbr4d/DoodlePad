@@ -142,13 +142,144 @@
                 android:layout_toRightOf="@id/iButtonC11"/>
 
             <TextView
-                android:text="Selected Color"
+                android:text="Red"
                 android:id="@+id/txtViewpop2"
-                android:layout_width="130dp"
+                android:layout_width="135dp"
                 android:background="@color/white"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_below="@id/iButtonC9"/>
+
+            <TextView
+                android:text="Background"
+                android:id="@+id/txtViewpop3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtViewpop2"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="5dp"/>
+
+            <ImageButton
+                android:id="@+id/btnBgC1"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/black"
+                android:layout_below="@id/txtViewpop3"/>
+
+            <ImageButton
+                android:id="@+id/btnBgC2"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/white"
+                android:layout_below="@id/txtViewpop3"
+                android:layout_marginRight="5dp"
+                android:layout_toRightOf="@+id/btnBgC1"/>
+
+            <ImageButton
+                android:id="@+id/btnBgC3"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/blue"
+                android:layout_below="@id/txtViewpop3"
+                android:layout_toRightOf="@+id/btnBgC2" />
+
+            <ImageButton
+                android:id="@+id/btnBgC4"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/cyan"
+                android:layout_below="@id/txtViewpop3"
+                android:layout_toRightOf="@+id/btnBgC3"/>
+
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/btnBgC5"
+                android:src="@drawable/darkgray"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/btnBgC1" />
+
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/btnBgC6"
+                android:src="@drawable/gray"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/btnBgC1"
+                android:layout_toRightOf="@id/btnBgC5"/>
+
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/btnBgC7"
+                android:src="@drawable/lightgray"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/btnBgC1"
+                android:layout_toRightOf="@id/btnBgC6"/>
+
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/btnBgC8"
+                android:src="@drawable/green"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/btnBgC1"
+                android:layout_toRightOf="@id/btnBgC7"/>
+
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/btnBgC9"
+                android:src="@drawable/magenta"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/btnBgC5" />
+
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/btnBgC10"
+                android:src="@drawable/red"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/btnBgC6"
+                android:layout_toRightOf="@id/btnBgC9"/>
+
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/btnBgC11"
+                android:src="@drawable/yellow"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/btnBgC7"
+                android:layout_toRightOf="@id/btnBgC10"/>
+
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/btnBgC12"
+                android:src="@drawable/orange"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/btnBgC8"
+                android:layout_toRightOf="@id/btnBgC11"/>
+
+            <TextView
+                android:text="White"
+                android:id="@+id/txtViewpop4"
+                android:layout_width="135dp"
+                android:background="@color/white"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/btnBgC9"/>
 
         </RelativeLayout>
 
@@ -157,8 +288,9 @@
             android:id="@+id/submitColor"
             android:layout_centerHorizontal="true"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
+
+
     </LinearLayout>
 </LinearLayout>
 

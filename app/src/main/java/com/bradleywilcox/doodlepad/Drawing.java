@@ -34,6 +34,7 @@ public class Drawing extends View {
     private Bitmap bitmap;
     private EraserTool eraserTool;
 
+
     private float dpiPixel;
 
     private ITool[] tools = new ITool[Tools.values().length];
@@ -73,6 +74,11 @@ public class Drawing extends View {
     public void setupPaint(int kolor)
     {
         paint.setColor(kolor);
+    }
+
+    public void setBackg(int kolor)
+    {
+        drawingCanvas.drawColor(kolor);
     }
 
     @Override
