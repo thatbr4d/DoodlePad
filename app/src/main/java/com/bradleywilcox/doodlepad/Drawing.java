@@ -32,6 +32,7 @@ public class Drawing extends View {
     private Paint paint;
     private Canvas drawingCanvas;
     private Bitmap bitmap;
+    private EraserTool eraserTool;
 
     private float dpiPixel;
 
@@ -112,6 +113,12 @@ public class Drawing extends View {
         return true;
     }
 
+    public void setStrokeWidth(float width){
+        paint.setStrokeWidth(width * dpiPixel);
+        EraserTool et = (EraserTool)tools[Tools.eraser.ordinal()];
+        et.setEraserStroke(width * dpiPixel);
+    }
+
     public void setTool(Tools tool){
         this.currentTool = tool;
 
@@ -132,9 +139,6 @@ public class Drawing extends View {
         }
     }
 
-    public void setStrokeWidth(float width){
-        paint.setStrokeWidth(width * dpiPixel);
-    }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
