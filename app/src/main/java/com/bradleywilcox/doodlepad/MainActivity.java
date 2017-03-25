@@ -130,9 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             runPopup();
         }else if(view == btnErase) {
             drawingView.setTool(Drawing.Tools.eraser);
-            drawingView.setupPaint(Color.WHITE);
             txtViewColor3.setText("Eraser");
-            showColor.setImageResource(R.drawable.white);
         }else if(view == btnSave){
 
             if(!hasExtPermission) {
