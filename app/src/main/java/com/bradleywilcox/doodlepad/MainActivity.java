@@ -42,6 +42,7 @@ import android.widget.Toast;
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+
     private ImageButton btnLineTool, btnRectTool, btnBrushTool, btnSave, btnErase;
     private SeekBar sbStrokeWidth;
     private Drawing drawingView;
@@ -91,7 +92,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnSave.setOnClickListener(this);
         btnColor.setOnClickListener(this);
 
-
         sbStrokeWidth.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int progress = 0;
 
@@ -133,7 +133,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             drawingView.setupPaint(Color.WHITE);
             txtViewColor3.setText("Eraser");
             showColor.setImageResource(R.drawable.white);
-
         }else if(view == btnSave){
 
             if(!hasExtPermission) {
