@@ -10,7 +10,7 @@
         android:orientation="vertical"
         android:layout_margin="5dp"
         android:background="@android:color/darker_gray">
-        >
+
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -142,7 +142,7 @@
                 android:layout_toRightOf="@id/iButtonC11"/>
 
             <TextView
-                android:text="Red"
+                android:text=""
                 android:id="@+id/txtViewpop2"
                 android:layout_width="135dp"
                 android:background="@color/white"
@@ -273,7 +273,7 @@
                 android:layout_toRightOf="@id/btnBgC11"/>
 
             <TextView
-                android:text="White"
+                android:text=""
                 android:id="@+id/txtViewpop4"
                 android:layout_width="135dp"
                 android:background="@color/white"
@@ -281,14 +281,17 @@
                 android:layout_marginTop="10dp"
                 android:layout_below="@id/btnBgC9"/>
 
+            <Button
+                android:text="Submit"
+                android:id="@+id/submitColor"
+                android:layout_width="135dp"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtViewpop4"/>
+
         </RelativeLayout>
 
-        <Button
-            android:text="Submit"
-            android:id="@+id/submitColor"
-            android:layout_centerHorizontal="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+
 
 
     </LinearLayout>
