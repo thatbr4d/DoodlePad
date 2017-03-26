@@ -31,9 +31,8 @@ public class Drawing extends View {
 
     private Paint paint;
     private Canvas drawingCanvas;
-    private Bitmap bitmap;
-    private EraserTool eraserTool;
 
+    private BitmapManager bitmaps;
 
     private float dpiPixel;
 
@@ -81,14 +80,23 @@ public class Drawing extends View {
         drawingCanvas.drawColor(kolor);
     }
 
+    /**
+     * Draws the top bitmap to the screen along with any inprogress actions by the user
+     * @param canvas
+     */
     @Override
     protected void onDraw(Canvas canvas){
         super.onDraw(canvas);
 
-        canvas.drawBitmap(bitmap, 0, 0, paint);
+        canvas.drawBitmap(bitmaps.getNewest(), 0, 0, paint);
         tools[currentTool.ordinal()].draw(canvas, paint);
     }
 
+    /**
+     * Handles all actions performed from the user on the drawing canvas
+     * @param event
+     * @return
+     */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         float touchX = event.getX();
@@ -107,6 +115,9 @@ public class Drawing extends View {
 
             case MotionEvent.ACTION_UP:
 
+                bitmaps.copyAndAdd();
+                drawingCanvas.setBitmap(bitmaps.getNewest());
+
                 tools[currentTool.ordinal()].draw(drawingCanvas, paint);
                 tools[currentTool.ordinal()].reset();
                 break;
@@ -119,12 +130,20 @@ public class Drawing extends View {
         return true;
     }
 
+    /**
+     * Receives the stroke width to be used on all tools
+     * @param width
+     */
     public void setStrokeWidth(float width){
         paint.setStrokeWidth(width * dpiPixel);
         EraserTool et = (EraserTool)tools[Tools.eraser.ordinal()];
         et.setEraserStroke(width * dpiPixel);
     }
 
+    /**
+     * Receives the current tool to draw with
+     * @param tool
+     */
     public void setTool(Tools tool){
         this.currentTool = tool;
 
@@ -138,10 +157,19 @@ public class Drawing extends View {
             paint.setStyle(Paint.Style.STROKE);
             paint.setStrokeJoin(Paint.Join.ROUND);
             paint.setStrokeCap(Paint.Cap.ROUND);
-        }else if(this.currentTool == Tools.eraser) {
-            paint.setStyle(Paint.Style.STROKE);
-            paint.setStrokeJoin(Paint.Join.ROUND);
-            paint.setStrokeCap(Paint.Cap.ROUND);
+        }
+    }
+
+    /**
+     * Deletes the newest bitmap and sets the canvas to previous
+     */
+    public void performUndo(){
+        if(bitmaps != null && bitmaps.size() > 1) {
+
+            bitmaps.removeNewest();
+            drawingCanvas.setBitmap(bitmaps.getNewest());
+
+            invalidate();
         }
     }
 
@@ -185,8 +213,7 @@ public class Drawing extends View {
         currentWidth = w;
         currentHeight = h;
 
-        bitmap = bitmap.createBitmap(currentWidth, currentHeight, Bitmap.Config.ARGB_8888);
-        drawingCanvas = new Canvas(bitmap);
-
+        bitmaps = new BitmapManager(w, h);
+        drawingCanvas = new Canvas(bitmaps.getNewest());
     }
 }
