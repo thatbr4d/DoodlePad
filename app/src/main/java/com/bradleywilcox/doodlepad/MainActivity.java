@@ -377,7 +377,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 bgVal = 9;
-                txtViewColor.setText("Magenta");
+                txtViewColor4.setText("Magenta");
             }
         });
         bgbtn10.setOnClickListener(new ImageButton.OnClickListener() {
