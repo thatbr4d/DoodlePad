@@ -29,12 +29,13 @@ public class Drawing extends View {
     private int currentWidth;
     private int currentHeight;
 
-    private Paint paint, backgroundPaint;
+    private Paint paint, backgroundPaint = new Paint();
     private Canvas drawingCanvas;
 
     private BitmapManager bitmaps;
 
     private float dpiPixel;
+
 
     private ITool[] tools = new ITool[Tools.values().length];
     private Tools currentTool;
@@ -58,6 +59,7 @@ public class Drawing extends View {
         paint = new Paint();
         paint.setColor(Color.RED);
         paint.setStyle(Paint.Style.STROKE);
+        backgroundPaint.setColor(Color.WHITE);
 
         tools[Tools.line.ordinal()] = new LineTool();
         tools[Tools.rectangle.ordinal()] = new RectangleTool();
@@ -89,6 +91,7 @@ public class Drawing extends View {
     protected void onDraw(Canvas canvas){
         super.onDraw(canvas);
 
+        canvas.drawRect(dpiPixel, dpiPixel, currentWidth-dpiPixel, currentHeight-dpiPixel, backgroundPaint);
         canvas.drawBitmap(bitmaps.getNewest(), 0, 0, paint);
         tools[currentTool.ordinal()].draw(canvas, paint);
     }
