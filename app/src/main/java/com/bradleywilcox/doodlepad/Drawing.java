@@ -29,7 +29,7 @@ public class Drawing extends View {
     private int currentWidth;
     private int currentHeight;
 
-    private Paint paint, backgroundPaint = new Paint();
+    private Paint paint, backgroundPaint;
     private Canvas drawingCanvas;
 
     private BitmapManager bitmaps;
@@ -59,6 +59,8 @@ public class Drawing extends View {
         paint = new Paint();
         paint.setColor(Color.RED);
         paint.setStyle(Paint.Style.STROKE);
+
+        backgroundPaint = new Paint();
         backgroundPaint.setColor(Color.WHITE);
 
         tools[Tools.line.ordinal()] = new LineTool();
