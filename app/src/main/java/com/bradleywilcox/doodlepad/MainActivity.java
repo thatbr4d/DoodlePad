@@ -39,7 +39,8 @@ import static com.bradleywilcox.doodlepad.R.id.txtViewpop2;
  * gallery.  Found in the class 'Image'.  Also required requestPermissions found in this class for sdk >= 23
  *
  *
- * 3.
+ * 3.  Undo Feature, the undo button will undo the users most recent actions, one at a time, much like the common 'ctrl-z',
+ * most of the code for this feature is found in the class 'BitmapManager' and is used throughout the 'Drawing' class
  *
  *
  * 4.
@@ -47,7 +48,7 @@ import static com.bradleywilcox.doodlepad.R.id.txtViewpop2;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    private ImageButton btnLineTool, btnRectTool, btnBrushTool, btnSave, btnErase;
+    private ImageButton btnLineTool, btnRectTool, btnBrushTool, btnSave, btnErase, btnUndo;
     private SeekBar sbStrokeWidth;
     private Drawing drawingView;
     private Button btnColor, btnSubmit;
@@ -68,14 +69,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
 
-        getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-
         setContentView(R.layout.activity_main);
 
         btnLineTool = (ImageButton) findViewById(R.id.btnLineTool);
@@ -83,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnBrushTool = (ImageButton) findViewById(R.id.btnBrushTool);
         btnSave = (ImageButton) findViewById(R.id.btnSave);
         btnErase = (ImageButton) findViewById(R.id.btnErase);
+        btnUndo = (ImageButton) findViewById(R.id.btnUndo);
 
         sbStrokeWidth = (SeekBar) findViewById(R.id.sbStrokeWidth);
         drawingView = (Drawing) findViewById(R.id.drawing_view);
@@ -99,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnErase.setOnClickListener(this);
         btnSave.setOnClickListener(this);
         btnColor.setOnClickListener(this);
+        btnUndo.setOnClickListener(this);
 
         sbStrokeWidth.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int progress = 0;
@@ -143,6 +138,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             drawingView.setTool(Drawing.Tools.eraser);
             txtViewColor3.setText("Eraser");
             setPopVal(0, bgVal);
+        }else if(view == btnUndo){
+            drawingView.performUndo();
         }else if(view == btnSave){
 
             if(!hasExtPermission) {
@@ -441,6 +438,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return;
             }
         }
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
     }
 
 }

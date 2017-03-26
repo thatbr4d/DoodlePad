@@ -52,6 +52,13 @@
             android:layout_width="50dp"
             android:layout_height="40dp"
             android:scaleType="fitCenter"
+            app:srcCompat="@drawable/undo"
+            android:id="@+id/btnUndo"
+            />
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:scaleType="fitCenter"
             app:srcCompat="@drawable/save"
             android:id="@+id/btnSave"
             />
