@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="5dp"
+        android:background="@android:color/darker_gray">
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="20dp">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/txtViewpopAd"
+                android:layout_marginBottom="10dp"
+                android:text="Input R G B values" />
+
+            <EditText
+                android:id="@+id/inputRed"
+                android:textSize="10dp"
+                android:hint="Red"
+                android:ems="10"
+                android:enabled="true"
+                android:textAlignment="center"
+                android:background="@drawable/border"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_below="@+id/txtViewpopAd"
+                android:layout_marginRight="5dp"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:id="@+id/inputGreen"
+                android:hint = "Green"
+                android:textSize="10dp"
+                android:enabled="true"
+                android:textAlignment="center"
+                android:background="@drawable/border"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="5dp"
+                android:layout_below="@+id/txtViewpopAd"
+                android:layout_toRightOf="@+id/inputRed"/>
+
+            <EditText
+                android:id="@+id/inputBlue"
+                android:hint="Blue"
+                android:textSize="10dp"
+                android:text=""
+                android:textAlignment="center"
+                android:background="@drawable/border"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="5dp"
+                android:layout_below="@+id/txtViewpopAd"
+                android:layout_toRightOf="@+id/inputGreen" />
+
+            <Button
+                android:text="Submit"
+                android:id="@+id/submitAdColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/inputRed"/>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+</LinearLayout>
+
+

@@ -151,18 +151,9 @@
             android:background="@drawable/roundbutton"
             android:id="@+id/buttonColor"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginRight="5dp"
             android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/textViewcolor3" />
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="15dp"
-            android:background="@color/white"
-            android:id="@+id/imageButtoncolor2"
-            android:layout_alignTop="@+id/textViewcolor2"
-            android:layout_toEndOf="@+id/textViewcolor2"
-            android:layout_marginStart="63dp" />
 
         <TextView
             android:text="Background"
@@ -170,8 +161,16 @@
             android:layout_height="wrap_content"
             android:id="@+id/textViewcolor3"
             android:layout_above="@+id/imageButtoncolor2"
-            android:layout_toEndOf="@+id/textViewcolor2"
-            android:layout_marginStart="46dp" />
+            android:layout_marginStart="125dp" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="15dp"
+            android:background="@color/white"
+            android:id="@+id/imageButtoncolor2"
+            android:layout_alignTop="@+id/textViewcolor2"
+            android:layout_alignStart="@+id/textViewcolor3"
+            android:layout_marginStart="12dp" />
 
 
     </RelativeLayout>

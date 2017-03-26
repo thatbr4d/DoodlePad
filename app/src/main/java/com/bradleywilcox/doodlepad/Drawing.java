@@ -29,7 +29,7 @@ public class Drawing extends View {
     private int currentWidth;
     private int currentHeight;
 
-    private Paint paint;
+    private Paint paint, backgroundPaint;
     private Canvas drawingCanvas;
 
     private BitmapManager bitmaps;
@@ -77,7 +77,8 @@ public class Drawing extends View {
 
     public void setBackg(int kolor)
     {
-        drawingCanvas.drawColor(kolor);
+        backgroundPaint.setColor(kolor);
+        invalidate();
     }
 
     /**
