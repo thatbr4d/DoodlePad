@@ -77,11 +77,8 @@ public class Drawing extends View {
 
     public void setBackg(int kolor)
     {
-        backgroundPaint = new Paint();
         backgroundPaint.setColor(kolor);
         invalidate();
-        drawingCanvas.drawRect(dpiPixel, dpiPixel, currentWidth-dpiPixel,
-                currentHeight-dpiPixel, backgroundPaint);
     }
 
     /**
@@ -91,7 +88,6 @@ public class Drawing extends View {
     @Override
     protected void onDraw(Canvas canvas){
         super.onDraw(canvas);
-
 
         canvas.drawBitmap(bitmaps.getNewest(), 0, 0, paint);
         tools[currentTool.ordinal()].draw(canvas, paint);
