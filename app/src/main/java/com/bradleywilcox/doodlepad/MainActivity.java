@@ -13,6 +13,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -50,7 +51,7 @@ import static com.bradleywilcox.doodlepad.R.id.txtViewpop2;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    private ImageButton btnLineTool, btnRectTool, btnBrushTool, btnSave, btnErase;
+    private ImageButton btnLineTool, btnRectTool, btnBrushTool, btnSave, btnErase, btnUndo;
     private SeekBar sbStrokeWidth;
     private Drawing drawingView;
     private Button btnColor, btnSubmit, btnAdvColor, btnSubmitAdv;
@@ -72,14 +73,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
 
-        getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-
         setContentView(R.layout.activity_main);
 
         btnLineTool = (ImageButton) findViewById(R.id.btnLineTool);
@@ -87,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnBrushTool = (ImageButton) findViewById(R.id.btnBrushTool);
         btnSave = (ImageButton) findViewById(R.id.btnSave);
         btnErase = (ImageButton) findViewById(R.id.btnErase);
+        btnUndo = (ImageButton) findViewById(R.id.btnUndo);
 
         sbStrokeWidth = (SeekBar) findViewById(R.id.sbStrokeWidth);
         drawingView = (Drawing) findViewById(R.id.drawing_view);
@@ -106,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnSave.setOnClickListener(this);
         btnColor.setOnClickListener(this);
         btnAdvColor.setOnClickListener(this);
+        btnUndo.setOnClickListener(this);
 
         sbStrokeWidth.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int progress = 0;
@@ -164,6 +159,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(getApplicationContext(), "Drawing Saved Successfully", Toast.LENGTH_SHORT).show();
             else
                 Toast.makeText(getApplicationContext(), "Problem Saving Image", Toast.LENGTH_SHORT).show();
+        } else if(view == btnUndo){
+            drawingView.performUndo();
         }
     }
 
@@ -192,12 +189,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         final PopupWindow popupWindow2 = new PopupWindow(
                 popupView2,
                 LinearLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT);
+                RelativeLayout.LayoutParams.WRAP_CONTENT, true);
 
         setAdvColor(popupView2, popupWindow2);
 
         popupWindow2.showAtLocation(drawingView, 100, 100, 0);
-
+        // request keyboard
+        //popupWindow2.setSoftInputMode (WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     }
 
     public void setimageBtns(View pop, final PopupWindow popw) {
@@ -533,6 +531,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 mixColors(ed1, ed2, ed3);
                 pow2.dismiss();
+
+                fullScreen();
             }
         });
     }
@@ -558,6 +558,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return;
             }
         }
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        fullScreen();
+    }
+
+    private void fullScreen(){
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
     }
 
 }
