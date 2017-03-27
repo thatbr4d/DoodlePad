@@ -5,13 +5,17 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Build;
+import android.provider.ContactsContract;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.PermissionChecker;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.PopupMenu;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -43,15 +47,16 @@ import static com.bradleywilcox.doodlepad.R.id.txtViewpop2;
  * gallery.  Found in the class 'Image'.  Also required requestPermissions found in this class for sdk >= 23
  *
  *
- * 3.
+ * 3.  Undo Feature, the undo button will undo the users most recent actions, one at a time, much like the common 'ctrl-z',
+ * most of the code for this feature is found in the class 'BitmapManager' and is used throughout the 'Drawing' class
  *
  *
- * 4.
+ * 4.  Eraser Tool, Background Colors, CircleTool, Rounded Rectangle Tool
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    private ImageButton btnLineTool, btnRectTool, btnBrushTool, btnSave, btnErase, btnUndo;
+    private ImageButton btnLineTool, btnRectTool, btnBrushTool, btnSave, btnErase, btnUndo, btnRoundRect, btnCircle, btnNewFile, btnInfo;
     private SeekBar sbStrokeWidth;
     private Drawing drawingView;
     private Button btnColor, btnSubmit, btnAdvColor, btnSubmitAdv;
@@ -77,10 +82,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btnLineTool = (ImageButton) findViewById(R.id.btnLineTool);
         btnRectTool = (ImageButton) findViewById(R.id.btnRectangleTool);
+        btnRoundRect = (ImageButton) findViewById(R.id.btnRoundRect);
+        btnCircle = (ImageButton) findViewById(R.id.btnCircle);
         btnBrushTool = (ImageButton) findViewById(R.id.btnBrushTool);
         btnSave = (ImageButton) findViewById(R.id.btnSave);
         btnErase = (ImageButton) findViewById(R.id.btnErase);
         btnUndo = (ImageButton) findViewById(R.id.btnUndo);
+        btnNewFile = (ImageButton) findViewById(R.id.btnNewFile);
 
         sbStrokeWidth = (SeekBar) findViewById(R.id.sbStrokeWidth);
         drawingView = (Drawing) findViewById(R.id.drawing_view);
@@ -95,12 +103,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btnLineTool.setOnClickListener(this);
         btnRectTool.setOnClickListener(this);
+        btnRoundRect.setOnClickListener(this);
+        btnCircle.setOnClickListener(this);
         btnBrushTool.setOnClickListener(this);
         btnErase.setOnClickListener(this);
         btnSave.setOnClickListener(this);
         btnColor.setOnClickListener(this);
         btnAdvColor.setOnClickListener(this);
         btnUndo.setOnClickListener(this);
+        btnNewFile.setOnClickListener(this);
 
         sbStrokeWidth.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int progress = 0;
@@ -135,6 +146,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             drawingView.setTool(Drawing.Tools.rectangle);
             txtViewColor3.setText("Rectangle");
             setPopVal(setVal, bgVal);
+        } else if (view == btnRoundRect) {
+            drawingView.setTool(Drawing.Tools.round_rectangle);
+            txtViewColor3.setText("Round Rect");
+            setPopVal(setVal, bgVal);
+        } else if (view == btnCircle) {
+            drawingView.setTool(Drawing.Tools.circle);
+            txtViewColor3.setText("Circle");
+            setPopVal(setVal, bgVal);
         } else if (view == btnBrushTool) {
             drawingView.setTool(Drawing.Tools.brush);
             txtViewColor3.setText("Brush");
@@ -161,7 +180,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(getApplicationContext(), "Problem Saving Image", Toast.LENGTH_SHORT).show();
         } else if(view == btnUndo){
             drawingView.performUndo();
+        } else if(view == btnNewFile){
+            txtViewColor3.setText("Line");
+            setPopVal(10, 2);
+            drawingView.reset();
         }
+
     }
 
 
@@ -194,8 +218,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setAdvColor(popupView2, popupWindow2);
 
         popupWindow2.showAtLocation(drawingView, 100, 100, 0);
-        // request keyboard
-        //popupWindow2.setSoftInputMode (WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     }
 
     public void setimageBtns(View pop, final PopupWindow popw) {
@@ -576,6 +598,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         | View.SYSTEM_UI_FLAG_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
     }
+
+
+
 
 }
 

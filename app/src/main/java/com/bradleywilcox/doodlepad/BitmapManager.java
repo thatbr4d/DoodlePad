@@ -52,4 +52,11 @@ public class BitmapManager {
     public int size(){
         return Bitmaps.size();
     }
+
+    public void recycle(){
+        for(Bitmap b : Bitmaps){
+            b.recycle();
+        }
+        Bitmaps = null;
+    }
 }

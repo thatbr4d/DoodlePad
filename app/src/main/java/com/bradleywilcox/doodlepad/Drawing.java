@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.telephony.CellIdentityCdma;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -23,7 +24,9 @@ public class Drawing extends View {
         line,
         rectangle,
         brush,
-        eraser
+        eraser,
+        round_rectangle,
+        circle
     }
 
     private int currentWidth;
@@ -35,7 +38,6 @@ public class Drawing extends View {
     private BitmapManager bitmaps;
 
     private float dpiPixel;
-
 
     private ITool[] tools = new ITool[Tools.values().length];
     private Tools currentTool;
@@ -63,13 +65,17 @@ public class Drawing extends View {
         backgroundPaint = new Paint();
         backgroundPaint.setColor(Color.WHITE);
 
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+        dpiPixel = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, dm);
+
         tools[Tools.line.ordinal()] = new LineTool();
         tools[Tools.rectangle.ordinal()] = new RectangleTool();
         tools[Tools.brush.ordinal()] = new BrushTool();
         tools[Tools.eraser.ordinal()] = new EraserTool();
+        tools[Tools.round_rectangle.ordinal()] = new RoundedRectangleTool(dpiPixel);
+        tools[Tools.circle.ordinal()] = new CircleTool();
 
-        DisplayMetrics dm = getResources().getDisplayMetrics();
-        dpiPixel = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, dm);
+
 
         setTool(Tools.line);
     }
@@ -83,6 +89,14 @@ public class Drawing extends View {
     {
         backgroundPaint.setColor(kolor);
         invalidate();
+    }
+
+    public void reset(){
+        setTool(Tools.line);
+        setupPaint(Color.RED);
+        bitmaps.recycle();
+        bitmaps = new BitmapManager(currentWidth, currentHeight);
+        setBackg(Color.WHITE);
     }
 
     /**
@@ -153,7 +167,7 @@ public class Drawing extends View {
     public void setTool(Tools tool){
         this.currentTool = tool;
 
-        if(this.currentTool == Tools.rectangle){
+        if(this.currentTool == Tools.rectangle || this.currentTool == Tools.round_rectangle || this.currentTool == Tools.circle){
             paint.setStyle(Paint.Style.FILL);
         }else if(this.currentTool == Tools.line){
             paint.setStyle(Paint.Style.STROKE);

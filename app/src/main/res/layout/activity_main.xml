@@ -27,13 +27,7 @@
             app:srcCompat="@drawable/line"
             android:id="@+id/btnLineTool"
             />
-        <ImageButton
-            android:layout_width="50dp"
-            android:layout_height="40dp"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/rect"
-            android:id="@+id/btnRectangleTool"
-            />
+
         <ImageButton
             android:layout_width="50dp"
             android:layout_height="40dp"
@@ -41,6 +35,31 @@
             app:srcCompat="@drawable/brush"
             android:id="@+id/btnBrushTool"
             />
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/rect"
+            android:id="@+id/btnRectangleTool"
+            />
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/roundrect"
+            android:id="@+id/btnRoundRect"
+            />
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/circle"
+            android:id="@+id/btnCircle"
+            />
+
         <ImageButton
             android:layout_width="50dp"
             android:layout_height="40dp"
@@ -48,6 +67,25 @@
             app:srcCompat="@drawable/eraser"
             android:id="@+id/btnErase"
             />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        >
+
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/newfile"
+            android:id="@+id/btnNewFile"
+            />
+
         <ImageButton
             android:layout_width="50dp"
             android:layout_height="40dp"
@@ -55,12 +93,21 @@
             app:srcCompat="@drawable/undo"
             android:id="@+id/btnUndo"
             />
+
         <ImageButton
             android:layout_width="50dp"
             android:layout_height="40dp"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/save"
             android:id="@+id/btnSave"
+            />
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/info"
+            android:id="@+id/btnInfo"
             />
 
 
