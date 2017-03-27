@@ -105,7 +105,7 @@ public class Drawing extends View {
     protected void onDraw(Canvas canvas){
         super.onDraw(canvas);
 
-        canvas.drawRect(dpiPixel, dpiPixel, currentWidth-dpiPixel, currentHeight-dpiPixel, backgroundPaint);
+        canvas.drawRect(0, 0, currentWidth, currentHeight, backgroundPaint);
         canvas.drawBitmap(bitmaps.getNewest(), 0, 0, paint);
         tools[currentTool.ordinal()].draw(canvas, paint);
     }
