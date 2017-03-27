@@ -33,7 +33,7 @@ public class RectangleTool implements ITool {
     }
 
     public void reset() {
-
+        rect.set(-1.0f, -1.0f, -1.0f, -1.0f);
     }
 
 
