@@ -7,9 +7,9 @@ import android.graphics.RectF;
 
 public class RectangleTool implements ITool {
 
-    private RectF rect;
-    private float startX;
-    private float startY;
+    protected RectF rect;
+    protected float startX;
+    protected float startY;
 
     public RectangleTool() {
         rect = new RectF();
