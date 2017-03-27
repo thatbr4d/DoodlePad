@@ -75,8 +75,6 @@ public class Drawing extends View {
         tools[Tools.round_rectangle.ordinal()] = new RoundedRectangleTool(dpiPixel);
         tools[Tools.circle.ordinal()] = new CircleTool();
 
-
-
         setTool(Tools.line);
     }
 

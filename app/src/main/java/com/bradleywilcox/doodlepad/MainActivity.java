@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageButton btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10, btn11, btn12,
             bgbtn1, bgbtn2, bgbtn3, bgbtn4, bgbtn5, bgbtn6, bgbtn7, bgbtn8, bgbtn9, bgbtn10, bgbtn11, bgbtn12;
     private Integer setVal = 10, bgVal = 0, ed1, ed2, ed3;
+    private boolean isInfoShowing;
 
     private boolean hasExtPermission = true;
 
@@ -89,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnErase = (ImageButton) findViewById(R.id.btnErase);
         btnUndo = (ImageButton) findViewById(R.id.btnUndo);
         btnNewFile = (ImageButton) findViewById(R.id.btnNewFile);
+        btnInfo = (ImageButton) findViewById(R.id.btnInfo);
 
         sbStrokeWidth = (SeekBar) findViewById(R.id.sbStrokeWidth);
         drawingView = (Drawing) findViewById(R.id.drawing_view);
@@ -112,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnAdvColor.setOnClickListener(this);
         btnUndo.setOnClickListener(this);
         btnNewFile.setOnClickListener(this);
+        btnInfo.setOnClickListener(this);
 
         sbStrokeWidth.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int progress = 0;
@@ -184,6 +188,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             txtViewColor3.setText("Line");
             setPopVal(10, 2);
             drawingView.reset();
+        } else if(view == btnInfo){
+            showInfo(view);
         }
 
     }
@@ -566,6 +572,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         drawingView.setupPaint(advCol);
         showColor.setBackgroundColor(advCol);
     }
+
+    public void showInfo(View v) {
+
+        if(!isInfoShowing) {
+            LayoutInflater layoutInflater = (LayoutInflater) getBaseContext()
+                    .getSystemService(LAYOUT_INFLATER_SERVICE);
+            View popupView = layoutInflater.inflate(R.layout.info, null);
+            final PopupWindow popupWindow = new PopupWindow(
+                    popupView,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT);
+
+            popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
+
+            isInfoShowing = true;
+
+            Button close = (Button) popupView.findViewById(R.id.btnCloseInfo);
+            close.setOnClickListener(new View.OnClickListener() {
+
+                public void onClick(View popupView) {
+                    isInfoShowing = false;
+                    popupWindow.dismiss();
+                }
+            });
+        }
+    }
+
+
+
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
