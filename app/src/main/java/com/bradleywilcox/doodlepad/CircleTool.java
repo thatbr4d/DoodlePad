@@ -3,9 +3,6 @@ package com.bradleywilcox.doodlepad;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
-/**
- * Created by Brad on 3/26/2017.
- */
 
 public class CircleTool implements ITool {
 

@@ -1,3 +1,31 @@
 <resources>
     <string name="app_name">DoodlePad</string>
+    <string name="line_info">
+        - Line Tool, draws a straight line from one point to another
+    </string>
+    <string name="brush_info">
+        - Brush Tool, free form painting in any direction or path
+    </string>
+    <string name="rectangle_info">
+        - Rectangle Tool, draw a rectangle of any size
+    </string>
+    <string name="rrectangle_info">
+        - Rounded Rectangle Tool, draw a rectangle of any size with rounded corners
+    </string>
+    <string name="circle_info">
+        - Circle Tool, draw a circle of any size
+    </string>
+    <string name="eraser_info">
+        - Eraser Tool, free form eraser
+    </string>
+    <string name="new_info">
+        - New Doodle, scratch what you have drawn and start completely over
+    </string>
+    <string name="undo_info">
+        - Undo, remove previous drawing action
+    </string>
+    <string name="save_info">
+        - Save, save your drawing as an image to your gallery
+    </string>
+
 </resources>
