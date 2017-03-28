@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -69,6 +70,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Integer setVal = 10, bgVal = 2, ed1, ed2, ed3;
 
     private boolean hasExtPermission = true;
+    private boolean isInfoShowing;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnErase = (ImageButton) findViewById(R.id.btnErase);
         btnUndo = (ImageButton) findViewById(R.id.btnUndo);
         btnNewFile = (ImageButton) findViewById(R.id.btnNewFile);
+        btnInfo = (ImageButton) findViewById(R.id.btnInfo);
 
         sbStrokeWidth = (SeekBar) findViewById(R.id.sbStrokeWidth);
         drawingView = (Drawing) findViewById(R.id.drawing_view);
@@ -113,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnAdvColor.setOnClickListener(this);
         btnUndo.setOnClickListener(this);
         btnNewFile.setOnClickListener(this);
+        btnInfo.setOnClickListener(this);
 
         eraserTool = new EraserTool();
 
@@ -187,6 +192,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             txtViewColor3.setText("Line");
             setPopVal(10, 2);
             drawingView.reset();
+        } else if(view == btnInfo){
+            showInfo(view);
         }
 
     }
@@ -623,6 +630,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setVal = advCol;
         drawingView.setupPaint(advCol);
         showColor.setBackgroundColor(advCol);
+    }
+
+    public void showInfo(View v) {
+
+        if(!isInfoShowing) {
+            LayoutInflater layoutInflater = (LayoutInflater) getBaseContext()
+                    .getSystemService(LAYOUT_INFLATER_SERVICE);
+            View popupView = layoutInflater.inflate(R.layout.info, null);
+            final PopupWindow popupWindow = new PopupWindow(
+                    popupView,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT);
+
+            popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
+
+            isInfoShowing = true;
+
+            Button close = (Button) popupView.findViewById(R.id.btnCloseInfo);
+            close.setOnClickListener(new View.OnClickListener() {
+
+                public void onClick(View popupView) {
+                    isInfoShowing = false;
+                    popupWindow.dismiss();
+                }
+            });
+        }
     }
 
     @Override
