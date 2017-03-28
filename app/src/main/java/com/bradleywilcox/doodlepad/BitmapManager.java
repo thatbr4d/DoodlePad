@@ -1,7 +1,15 @@
 package com.bradleywilcox.doodlepad;
 
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -12,13 +20,15 @@ import java.util.ArrayList;
 
 public class BitmapManager {
 
+    private static String STORAGE = "tmpBitmap.png";
     public static int MAX = 10;
     private ArrayList<Bitmap> Bitmaps;
     private Bitmap bitmap;
 
-    public BitmapManager(int w, int h){
+    public BitmapManager(int w, int h, Context context){
         Bitmaps = new ArrayList<>();
-        Bitmaps.add(0, bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888));
+        Bitmap tmp = loadNewest(context);
+        Bitmaps.add(0, tmp == null ? bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888) : tmp.copy(tmp.getConfig(), true));
     }
 
     public Bitmap getNewest(){
@@ -58,5 +68,35 @@ public class BitmapManager {
             b.recycle();
         }
         Bitmaps = null;
+    }
+
+    public static void saveNewest(Bitmap b, Context context){
+        FileOutputStream fos = null;
+
+        try {
+            fos = context.openFileOutput(STORAGE, Context.MODE_PRIVATE);
+            b.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        } catch (Exception e) {
+
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException e) {
+
+            }
+        }
+    }
+
+    public Bitmap loadNewest(Context context){
+        try {
+            FileInputStream fis = context.openFileInput(STORAGE);
+            Bitmap b = BitmapFactory.decodeStream(fis);
+
+            return b;
+        }
+        catch (FileNotFoundException e)
+        {
+            return null;
+        }
     }
 }

@@ -98,7 +98,7 @@ public class Drawing extends View {
         setTool(Tools.line);
         setupPaint(Color.RED);
         bitmaps.recycle();
-        bitmaps = new BitmapManager(currentWidth, currentHeight);
+        bitmaps = new BitmapManager(currentWidth, currentHeight, getContext());
         setBackg(Color.WHITE);
     }
 
@@ -183,6 +183,10 @@ public class Drawing extends View {
         }
     }
 
+    public Tools getTool(){
+        return this.currentTool;
+    }
+
     /**
      * Deletes the newest bitmap and sets the canvas to previous
      */
@@ -236,7 +240,11 @@ public class Drawing extends View {
         currentWidth = w;
         currentHeight = h;
 
-        bitmaps = new BitmapManager(w, h);
+        bitmaps = new BitmapManager(w, h, getContext());
         drawingCanvas = new Canvas(bitmaps.getNewest());
+    }
+
+    public Bitmap getNewestBitmap(){
+        return bitmaps.getNewest();
     }
 }
