@@ -441,6 +441,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void setEraser(int x)
     {
+
         drawingView.setEraserColor(x);
         showColor.setBackgroundColor(x);
     }
@@ -471,12 +472,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onClick(View v){
-
-                ed1 = Integer.parseInt(red.getText().toString());
-                ed2 = Integer.parseInt(green.getText().toString());
-                ed3 = Integer.parseInt(blue.getText().toString());
-
-                mixColors(ed1, ed2, ed3);
+                verifyRGB();
                 pow2.dismiss();
 
                 fullScreen();
@@ -491,6 +487,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 fullScreen();
             }
         });
+    }
+
+    public void verifyRGB()
+    {
+        String xx = red.getText().toString(), yy=green.getText().toString(), zz=blue.getText().toString();
+
+        if(xx.equals("")||yy.equals("")||zz.equals(""))
+        {
+            btnSubmitAdv.setClickable(false);
+        }else {
+            ed1 = Integer.parseInt(red.getText().toString());
+            ed2 = Integer.parseInt(green.getText().toString());
+            ed3 = Integer.parseInt(blue.getText().toString());
+
+            if (ed1 < 0 || ed1 > 255 || ed2 < 0 || ed2 > 255 || ed3 < 0 || ed3 > 255) {
+                btnSubmitAdv.setClickable(false);
+            }
+
+            mixColors(ed1, ed2, ed3);
+            btnSubmitAdv.setClickable(true);
+        }
     }
 
     public void mixColors(int x, int y, int z)
