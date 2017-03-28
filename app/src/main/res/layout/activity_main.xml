@@ -8,7 +8,6 @@
     android:paddingBottom="10dp"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.bradleywilcox.doodlepad.MainActivity"
     android:orientation="vertical"
     android:background="@color/colorPrimary">
@@ -20,13 +19,13 @@
         android:layout_gravity="center"
         >
 
-
         <ImageButton
             android:layout_width="50dp"
             android:layout_height="40dp"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/line"
             android:id="@+id/btnLineTool"
+
             />
 
         <ImageButton
@@ -130,7 +129,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/sbStrokeWidth"
             android:progress="0"
-            android:max="20" />
+            android:max="20"
+            />
 
     </LinearLayout>
 

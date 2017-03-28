@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 
+import static com.bradleywilcox.doodlepad.Drawing.Tools.eraser;
+
 public class EraserTool implements ITool {
     private Path path;
     private Paint paint;
@@ -22,6 +24,12 @@ public class EraserTool implements ITool {
 
     public void setStart(float x, float y){
         path.moveTo(x, y);
+    }
+
+    public void setEraserColor(int x)
+    {
+        EraserTool erase = new EraserTool();
+        erase.paint.setColor(x);
     }
 
     public void setEnd(float x, float y){

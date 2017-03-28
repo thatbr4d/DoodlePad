@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -60,14 +59,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageButton btnLineTool, btnRectTool, btnBrushTool, btnSave, btnErase, btnUndo, btnRoundRect, btnCircle, btnNewFile, btnInfo;
     private SeekBar sbStrokeWidth;
     private Drawing drawingView;
-    private Button btnColor, btnSubmit, btnAdvColor, btnSubmitAdv;
+    private Button btnColor, btnSubmit, btnAdvColor, btnSubmitAdv, btnCancelAdv;
     private TextView txtViewColor, txtViewColor2, txtViewColor3, txtViewColor4, txtViewColorAdv;
     private EditText red, green, blue;
     private ImageView showColor, showbgColor;
+    private EraserTool eraserTool;
     private ImageButton btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10, btn11, btn12,
             bgbtn1, bgbtn2, bgbtn3, bgbtn4, bgbtn5, bgbtn6, bgbtn7, bgbtn8, bgbtn9, bgbtn10, bgbtn11, bgbtn12;
-    private Integer setVal = 10, bgVal = 0, ed1, ed2, ed3;
-    private boolean isInfoShowing;
+    private Integer setVal = 10, bgVal = 2, ed1, ed2, ed3;
 
     private boolean hasExtPermission = true;
 
@@ -91,7 +90,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnErase = (ImageButton) findViewById(R.id.btnErase);
         btnUndo = (ImageButton) findViewById(R.id.btnUndo);
         btnNewFile = (ImageButton) findViewById(R.id.btnNewFile);
-        btnInfo = (ImageButton) findViewById(R.id.btnInfo);
 
         sbStrokeWidth = (SeekBar) findViewById(R.id.sbStrokeWidth);
         drawingView = (Drawing) findViewById(R.id.drawing_view);
@@ -115,7 +113,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnAdvColor.setOnClickListener(this);
         btnUndo.setOnClickListener(this);
         btnNewFile.setOnClickListener(this);
-        btnInfo.setOnClickListener(this);
+
+        eraserTool = new EraserTool();
 
         sbStrokeWidth.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int progress = 0;
@@ -170,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else if (view == btnErase) {
             drawingView.setTool(Drawing.Tools.eraser);
             txtViewColor3.setText("Eraser");
-            setPopVal(0, 0);
+            setEraser(bgVal);
         } else if (view == btnSave) {
 
             if (!hasExtPermission) {
@@ -188,8 +187,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             txtViewColor3.setText("Line");
             setPopVal(10, 2);
             drawingView.reset();
-        } else if(view == btnInfo){
-            showInfo(view);
         }
 
     }
@@ -436,6 +433,51 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    public void setEraser(int x)
+    {
+
+        if (x == 1) {
+           eraserTool.setEraserColor(x);
+            showColor.setBackgroundColor(x);
+        } else if (x == 2) {
+            eraserTool.setEraserColor(x);
+            showColor.setBackgroundColor(x);
+        } else if (x == 3) {
+            eraserTool.setEraserColor(x);
+            showColor.setBackgroundColor(x);
+        } else if (x == 4) {
+            eraserTool.setEraserColor(x);
+            showColor.setBackgroundColor(x);
+        } else if (x == 5) {
+            eraserTool.setEraserColor(x);
+            showColor.setBackgroundColor(x);
+        } else if (x == 6) {
+            eraserTool.setEraserColor(x);
+            showColor.setBackgroundColor(x);
+        } else if (x == 7) {
+            eraserTool.setEraserColor(x);
+            showColor.setBackgroundColor(x);
+        } else if (x == 8) {
+            eraserTool.setEraserColor(x);
+            showColor.setBackgroundColor(x);
+        } else if (x == 9) {
+            eraserTool.setEraserColor(x);
+            showColor.setBackgroundColor(x);
+        } else if (x == 10) {
+            eraserTool.setEraserColor(x);
+            showColor.setBackgroundColor(x);
+        } else if (x == 11) {
+            eraserTool.setEraserColor(x);
+            showColor.setBackgroundColor(x);
+        } else if (x == 12) {
+            eraserTool.setEraserColor(x);
+            showColor.setBackgroundColor(x);
+        }
+        else{
+            eraserTool.setEraserColor(x);
+            showColor.setBackgroundColor(x);
+        }
+    }
     public void setPopVal(int x, int y) {
 
         if (y == 1) {
@@ -474,14 +516,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (y == 12) {
             showbgColor.setBackgroundColor(Color.parseColor("#ffa500"));
             drawingView.setBackg(Color.parseColor("#ffa500"));
+            }
+        else{
+            showbgColor.setBackgroundColor(bgVal);
         }
 
 
         switch (x) {
 
-            case 0:
-                showColor.setBackgroundColor(Color.WHITE);
-                break;
             case 1:
                 drawingView.setupPaint(Color.BLACK);
                 showColor.setBackgroundColor(Color.BLACK);
@@ -546,9 +588,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         blue = (EditText) pop2.findViewById(R.id.inputBlue);
 
         btnSubmitAdv = (Button) pop2.findViewById(R.id.submitAdColor);
+        btnCancelAdv = (Button) pop2.findViewById(R.id.cancelAdColor);
 
         btnSubmitAdv.setOnClickListener(new Button.OnClickListener() {
-
 
             @Override
             public void onClick(View v){
@@ -563,45 +605,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 fullScreen();
             }
         });
+
+        btnCancelAdv.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View v)
+            {
+                pow2.dismiss();
+                fullScreen();
+            }
+        });
     }
 
     public void mixColors(int x, int y, int z)
     {
         int advCol;
         advCol = Color.rgb(x,y,z);
+        setVal = advCol;
         drawingView.setupPaint(advCol);
         showColor.setBackgroundColor(advCol);
     }
-
-    public void showInfo(View v) {
-
-        if(!isInfoShowing) {
-            LayoutInflater layoutInflater = (LayoutInflater) getBaseContext()
-                    .getSystemService(LAYOUT_INFLATER_SERVICE);
-            View popupView = layoutInflater.inflate(R.layout.info, null);
-            final PopupWindow popupWindow = new PopupWindow(
-                    popupView,
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    RelativeLayout.LayoutParams.WRAP_CONTENT);
-
-            popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
-
-            isInfoShowing = true;
-
-            Button close = (Button) popupView.findViewById(R.id.btnCloseInfo);
-            close.setOnClickListener(new View.OnClickListener() {
-
-                public void onClick(View popupView) {
-                    isInfoShowing = false;
-                    popupWindow.dismiss();
-                }
-            });
-        }
-    }
-
-
-
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
