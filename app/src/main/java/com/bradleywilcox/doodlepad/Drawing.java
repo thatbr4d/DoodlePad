@@ -98,7 +98,7 @@ public class Drawing extends View {
         setTool(Tools.line);
         setupPaint(Color.RED);
         bitmaps.recycle();
-        bitmaps = new BitmapManager(currentWidth, currentHeight, getContext());
+        bitmaps = new BitmapManager(currentWidth, currentHeight, getContext(), true);
         setBackg(Color.WHITE);
     }
 
@@ -240,7 +240,7 @@ public class Drawing extends View {
         currentWidth = w;
         currentHeight = h;
 
-        bitmaps = new BitmapManager(w, h, getContext());
+        bitmaps = new BitmapManager(w, h, getContext(), false);
         drawingCanvas = new Canvas(bitmaps.getNewest());
     }
 

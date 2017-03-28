@@ -25,10 +25,10 @@ public class BitmapManager {
     private ArrayList<Bitmap> Bitmaps;
     private Bitmap bitmap;
 
-    public BitmapManager(int w, int h, Context context){
+    public BitmapManager(int w, int h, Context context, boolean isReset){
         Bitmaps = new ArrayList<>();
         Bitmap tmp = loadNewest(context);
-        Bitmaps.add(0, tmp == null ? bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888) : tmp.copy(tmp.getConfig(), true));
+        Bitmaps.add(0, tmp == null || isReset ? bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888) : tmp.copy(tmp.getConfig(), true));
     }
 
     public Bitmap getNewest(){

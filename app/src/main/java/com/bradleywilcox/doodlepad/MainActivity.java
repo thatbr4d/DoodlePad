@@ -1,6 +1,7 @@
 package com.bradleywilcox.doodlepad;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -9,6 +10,7 @@ import android.os.Build;
 import android.provider.ContactsContract;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.PermissionChecker;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
@@ -191,11 +193,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if(view == btnUndo){
             drawingView.performUndo();
         } else if(view == btnNewFile){
-            txtViewColor3.setText("Line");
-            setVal = Color.RED;
-            bgVal = Color.WHITE;
-            setPopVal(setVal, bgVal);
-            drawingView.reset();
+            newFileDialog();
         } else if(view == btnInfo){
             showInfo(view);
         }
@@ -550,6 +548,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    public void newFileDialog(){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("New Doodle");
+        dialog.setMessage("Are you sure you want to start a new doodle?");
+        dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int which){
+                txtViewColor3.setText("Line");
+                setVal = Color.RED;
+                bgVal = Color.WHITE;
+                setPopVal(setVal, bgVal);
+                drawingView.reset();
+                dialog.dismiss();
+
+                fullScreen();
+            }
+        });
+        dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int which){
+                dialog.cancel();
+
+                fullScreen();
+            }
+        });
+        dialog.show();
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
@@ -571,13 +595,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fullScreen();
 
         SharedPreferences settings = getSharedPreferences(prefName, MODE_PRIVATE);
-        int color = settings.getInt("color", -1);
-        int bgColor = settings.getInt("bgColor", -1);
-        int tool = settings.getInt("tool", -1);
+        int color = settings.getInt("color", -99);
+        int bgColor = settings.getInt("bgColor", -99);
+        int tool = settings.getInt("tool", -99);
         String toolName = settings.getString("toolName", "");
-        int stroke = settings.getInt("stroke", -1);
+        int stroke = settings.getInt("stroke", -99);
 
-        if(color != -1 && bgColor != -1){
+        if(color != -99 && bgColor != -99){
             txtViewColor3.setText(toolName);
             setVal = color;
             bgVal = bgColor;
