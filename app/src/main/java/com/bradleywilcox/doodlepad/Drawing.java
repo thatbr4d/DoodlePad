@@ -89,6 +89,11 @@ public class Drawing extends View {
         invalidate();
     }
 
+    public void setEraserColor(int color){
+        EraserTool eraser = (EraserTool)tools[Tools.eraser.ordinal()];
+        eraser.setEraserColor(color);
+    }
+
     public void reset(){
         setTool(Tools.line);
         setupPaint(Color.RED);

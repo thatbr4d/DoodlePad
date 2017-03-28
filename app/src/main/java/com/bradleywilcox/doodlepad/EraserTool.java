@@ -28,8 +28,7 @@ public class EraserTool implements ITool {
 
     public void setEraserColor(int x)
     {
-        EraserTool erase = new EraserTool();
-        erase.paint.setColor(x);
+        this.paint.setColor(x);
     }
 
     public void setEnd(float x, float y){
