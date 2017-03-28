@@ -64,10 +64,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView txtViewColor, txtViewColor2, txtViewColor3, txtViewColor4, txtViewColorAdv;
     private EditText red, green, blue;
     private ImageView showColor, showbgColor;
-    private EraserTool eraserTool;
     private ImageButton btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10, btn11, btn12,
             bgbtn1, bgbtn2, bgbtn3, bgbtn4, bgbtn5, bgbtn6, bgbtn7, bgbtn8, bgbtn9, bgbtn10, bgbtn11, bgbtn12;
-    private Integer setVal = 10, bgVal = 2, ed1, ed2, ed3;
+    private Integer setVal = Color.RED, bgVal = Color.WHITE, ed1, ed2, ed3;
 
     private boolean hasExtPermission = true;
     private boolean isInfoShowing;
@@ -118,8 +117,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnUndo.setOnClickListener(this);
         btnNewFile.setOnClickListener(this);
         btnInfo.setOnClickListener(this);
-
-        eraserTool = new EraserTool();
 
         sbStrokeWidth.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int progress = 0;
@@ -190,7 +187,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             drawingView.performUndo();
         } else if(view == btnNewFile){
             txtViewColor3.setText("Line");
-            setPopVal(10, 2);
+            setVal = Color.RED;
+            bgVal = Color.WHITE;
+            setPopVal(setVal, bgVal);
             drawingView.reset();
         } else if(view == btnInfo){
             showInfo(view);
@@ -265,84 +264,84 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn1.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setVal = 1;
+                setVal = Color.BLACK;
                 txtViewColor.setText("Black");
             }
         });
         btn2.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setVal = 2;
+                setVal = Color.WHITE;
                 txtViewColor.setText("White");
             }
         });
         btn3.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setVal = 3;
+                setVal = Color.BLUE;
                 txtViewColor.setText("Blue");
             }
         });
         btn4.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setVal = 4;
+                setVal = Color.CYAN;
                 txtViewColor.setText("Cyan");
             }
         });
         btn5.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setVal = 5;
+                setVal = Color.DKGRAY;
                 txtViewColor.setText("Dark Gray");
             }
         });
         btn6.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setVal = 6;
+                setVal = Color.GRAY;
                 txtViewColor.setText("Gray");
             }
         });
         btn7.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setVal = 7;
+                setVal = Color.LTGRAY;
                 txtViewColor.setText("Light Gray");
             }
         });
         btn8.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setVal = 8;
+                setVal = Color.GREEN;
                 txtViewColor.setText("Green");
             }
         });
         btn9.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setVal = 9;
+                setVal = Color.MAGENTA;
                 txtViewColor.setText("Magenta");
             }
         });
         btn10.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setVal = 10;
+                setVal = Color.RED;
                 txtViewColor.setText("Red");
             }
         });
         btn11.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setVal = 11;
+                setVal = Color.YELLOW;
                 txtViewColor.setText("Yellow");
             }
         });
         btn12.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setVal = 12;
+                setVal = Color.parseColor("#ffa500");
                 txtViewColor.setText("Orange");
             }
         });
@@ -350,84 +349,84 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bgbtn1.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bgVal = 1;
+                bgVal = Color.BLACK;
                 txtViewColor4.setText("Black");
             }
         });
         bgbtn2.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bgVal = 2;
+                bgVal = Color.WHITE;
                 txtViewColor4.setText("White");
             }
         });
         bgbtn3.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bgVal = 3;
+                bgVal = Color.BLUE;
                 txtViewColor4.setText("Blue");
             }
         });
         bgbtn4.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bgVal = 4;
+                bgVal = Color.CYAN;
                 txtViewColor4.setText("Cyan");
             }
         });
         bgbtn5.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bgVal = 5;
+                bgVal = Color.DKGRAY;
                 txtViewColor4.setText("Dark Gray");
             }
         });
         bgbtn6.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bgVal = 6;
+                bgVal = Color.GRAY;
                 txtViewColor4.setText("Gray");
             }
         });
         bgbtn7.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bgVal = 7;
+                bgVal = Color.LTGRAY;
                 txtViewColor4.setText("Light Gray");
             }
         });
         bgbtn8.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bgVal = 8;
+                bgVal = Color.GREEN;
                 txtViewColor4.setText("Green");
             }
         });
         bgbtn9.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bgVal = 9;
+                bgVal = Color.MAGENTA;
                 txtViewColor4.setText("Magenta");
             }
         });
         bgbtn10.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bgVal = 10;
+                bgVal = Color.RED;
                 txtViewColor4.setText("Red");
             }
         });
         bgbtn11.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bgVal = 11;
+                bgVal = Color.YELLOW;
                 txtViewColor4.setText("Yellow");
             }
         });
         bgbtn12.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bgVal = 12;
+                bgVal = Color.parseColor("#ffa500");
                 txtViewColor4.setText("Orange");
             }
         });
@@ -442,146 +441,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void setEraser(int x)
     {
-
-        if (x == 1) {
-           eraserTool.setEraserColor(x);
-            showColor.setBackgroundColor(x);
-        } else if (x == 2) {
-            eraserTool.setEraserColor(x);
-            showColor.setBackgroundColor(x);
-        } else if (x == 3) {
-            eraserTool.setEraserColor(x);
-            showColor.setBackgroundColor(x);
-        } else if (x == 4) {
-            eraserTool.setEraserColor(x);
-            showColor.setBackgroundColor(x);
-        } else if (x == 5) {
-            eraserTool.setEraserColor(x);
-            showColor.setBackgroundColor(x);
-        } else if (x == 6) {
-            eraserTool.setEraserColor(x);
-            showColor.setBackgroundColor(x);
-        } else if (x == 7) {
-            eraserTool.setEraserColor(x);
-            showColor.setBackgroundColor(x);
-        } else if (x == 8) {
-            eraserTool.setEraserColor(x);
-            showColor.setBackgroundColor(x);
-        } else if (x == 9) {
-            eraserTool.setEraserColor(x);
-            showColor.setBackgroundColor(x);
-        } else if (x == 10) {
-            eraserTool.setEraserColor(x);
-            showColor.setBackgroundColor(x);
-        } else if (x == 11) {
-            eraserTool.setEraserColor(x);
-            showColor.setBackgroundColor(x);
-        } else if (x == 12) {
-            eraserTool.setEraserColor(x);
-            showColor.setBackgroundColor(x);
-        }
-        else{
-            eraserTool.setEraserColor(x);
-            showColor.setBackgroundColor(x);
-        }
+        drawingView.setEraserColor(x);
+        showColor.setBackgroundColor(x);
     }
+
     public void setPopVal(int x, int y) {
 
-        if (y == 1) {
-            drawingView.setBackg(Color.BLACK);
-            showbgColor.setBackgroundColor(Color.BLACK);
-        } else if (y == 2) {
-            showbgColor.setBackgroundColor(Color.WHITE);
-            drawingView.setBackg(Color.WHITE);
-        } else if (y == 3) {
-            showbgColor.setBackgroundColor(Color.BLUE);
-            drawingView.setBackg(Color.BLUE);
-        } else if (y == 4) {
-            showbgColor.setBackgroundColor(Color.CYAN);
-            drawingView.setBackg(Color.CYAN);
-        } else if (y == 5) {
-            showbgColor.setBackgroundColor(Color.DKGRAY);
-            drawingView.setBackg(Color.DKGRAY);
-        } else if (y == 6) {
-            showbgColor.setBackgroundColor(Color.GRAY);
-            drawingView.setBackg(Color.GRAY);
-        } else if (y == 7) {
-            showbgColor.setBackgroundColor(Color.LTGRAY);
-            drawingView.setBackg(Color.LTGRAY);
-        } else if (y == 8) {
-            showbgColor.setBackgroundColor(Color.GREEN);
-            drawingView.setBackg(Color.GREEN);
-        } else if (y == 9) {
-            showbgColor.setBackgroundColor(Color.MAGENTA);
-            drawingView.setBackg(Color.MAGENTA);
-        } else if (y == 10) {
-            showbgColor.setBackgroundColor(Color.RED);
-            drawingView.setBackg(Color.RED);
-        } else if (y == 11) {
-            showbgColor.setBackgroundColor(Color.YELLOW);
-            drawingView.setBackg(Color.YELLOW);
-        } else if (y == 12) {
-            showbgColor.setBackgroundColor(Color.parseColor("#ffa500"));
-            drawingView.setBackg(Color.parseColor("#ffa500"));
-            }
-        else{
-            showbgColor.setBackgroundColor(bgVal);
-        }
+        drawingView.setBackg(y);
+        showbgColor.setBackgroundColor(y);
 
-
-        switch (x) {
-
-            case 1:
-                drawingView.setupPaint(Color.BLACK);
-                showColor.setBackgroundColor(Color.BLACK);
-                break;
-            case 2:
-                drawingView.setupPaint(Color.WHITE);
-                showColor.setBackgroundColor(Color.WHITE);
-                break;
-            case 3:
-                drawingView.setupPaint(Color.BLUE);
-                showColor.setBackgroundColor(Color.BLUE);
-                break;
-            case 4:
-                drawingView.setupPaint(Color.CYAN);
-                showColor.setBackgroundColor(Color.CYAN);
-                break;
-            case 5:
-                drawingView.setupPaint(Color.DKGRAY);
-                showColor.setBackgroundColor(Color.DKGRAY);
-                break;
-            case 6:
-                drawingView.setupPaint(Color.GRAY);
-                showColor.setBackgroundColor(Color.GRAY);
-                break;
-            case 7:
-                drawingView.setupPaint(Color.LTGRAY);
-                showColor.setBackgroundColor(Color.LTGRAY);
-                break;
-            case 8:
-                drawingView.setupPaint(Color.GREEN);
-                showColor.setBackgroundColor(Color.GREEN);
-                break;
-            case 9:
-                drawingView.setupPaint(Color.MAGENTA);
-                showColor.setBackgroundColor(Color.MAGENTA);
-                break;
-            case 10:
-                drawingView.setupPaint(Color.RED);
-                showColor.setBackgroundColor(Color.RED);
-                break;
-            case 11:
-                drawingView.setupPaint(Color.YELLOW);
-                showColor.setBackgroundColor(Color.YELLOW);
-                break;
-            case 12:
-                drawingView.setupPaint(Color.parseColor("#ffa500"));
-                showColor.setBackgroundColor(Color.parseColor("#ffa500"));
-                break;
-            default:
-                break;
-        }
+        drawingView.setupPaint(x);
+        showColor.setBackgroundColor(x);
 
         drawingView.setStrokeWidth((float) sbStrokeWidth.getProgress());
     }
