@@ -37,7 +37,8 @@
                 android:layout_below="@+id/txtViewpopAd"
                 android:layout_marginRight="5dp"
                 android:layout_marginLeft="5dp"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:inputType="number" />
 
             <EditText
                 android:id="@+id/inputGreen"
@@ -49,7 +50,8 @@
                 android:layout_height="30dp"
                 android:layout_marginRight="5dp"
                 android:layout_below="@+id/txtViewpopAd"
-                android:layout_toRightOf="@+id/inputRed"/>
+                android:layout_toRightOf="@+id/inputRed"
+                android:inputType="number" />
 
             <EditText
                 android:id="@+id/inputBlue"
@@ -61,7 +63,8 @@
                 android:layout_height="30dp"
                 android:layout_marginRight="5dp"
                 android:layout_below="@+id/txtViewpopAd"
-                android:layout_toRightOf="@+id/inputGreen" />
+                android:layout_toRightOf="@+id/inputGreen"
+                android:inputType="number" />
 
             <Button
                 android:text="Submit"

@@ -498,14 +498,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(xx.equals("")||yy.equals("")||zz.equals(""))
         {
-            btnSubmitAdv.setClickable(false);
+            return;
         }else {
             ed1 = Integer.parseInt(red.getText().toString());
             ed2 = Integer.parseInt(green.getText().toString());
             ed3 = Integer.parseInt(blue.getText().toString());
 
             if (ed1 < 0 || ed1 > 255 || ed2 < 0 || ed2 > 255 || ed3 < 0 || ed3 > 255) {
-                btnSubmitAdv.setClickable(false);
+                return;
             }
 
             mixColors(ed1, ed2, ed3);
